@@ -1,0 +1,6 @@
+# Raw OTDA source PDFs stay local on the self-hosted Mac runner.
+# They are used for parsing but are not pushed to GitHub.
+raw_pdfs/*.pdf
+
+# Keep the placeholder so the empty folder exists in the repository.
+!raw_pdfs/.gitkeep
