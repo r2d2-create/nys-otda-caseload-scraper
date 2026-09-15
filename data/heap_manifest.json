@@ -1,12 +1,11 @@
 {
   "2024-09": {
-    "last_checked": "2026-09-15",
-    "month": 9,
-    "reason": "request_error: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+    "heap_line_count": 289,
+    "report_date": "2024-09-01",
     "report_id": "2024-09",
-    "status": "unavailable",
-    "url": "https://otda.ny.gov/resources/caseload/2024/2024-09-stats.pdf",
-    "year": 2024
+    "source_file": "2024-09-stats.pdf",
+    "source_sha256": "b786bbec56f14a997a19ecb730d48c81de1b6123741dacf56e45f9fd19cf62fe",
+    "status": "parsed"
   },
   "2025-09": {
     "last_checked": "2026-09-15",
