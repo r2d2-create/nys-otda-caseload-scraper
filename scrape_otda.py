@@ -14,7 +14,7 @@ METADATA_JSON = Path("otda_pdf_metadata.json")
 TEMP_DIR = Path("temp_otda_pdfs")
 
 START_YEAR = 2001
-CURRENT_YEAR = datetime.now().year
+END_YEAR = datetime.now().year
 
 USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
@@ -26,21 +26,16 @@ TEMP_DIR.mkdir(exist_ok=True)
 
 
 def clean_text(value):
-    """Convert extracted text into a consistently spaced string."""
     return re.sub(r"\s+", " ", str(value)).strip()
 
 
 def extract_month_label(link_text, pdf_url):
-    """
-    Return YYYY-MM when that information can be found in the URL or link label.
-    Returns None if no valid month label is found.
-    """
     url_match = re.search(r"(20\d{2})[-_/](0[1-9]|1[0-2])", pdf_url)
 
     if url_match:
         return f"{url_match.group(1)}-{url_match.group(2)}"
 
-    month_names = {
+    month_map = {
         "january": "01",
         "february": "02",
         "march": "03",
@@ -56,8 +51,8 @@ def extract_month_label(link_text, pdf_url):
     }
 
     text_match = re.search(
-        r"(January|February|March|April|May|June|July|August|September|October|November|December)"
-        r"\s+(20\d{2})",
+        r"(January|February|March|April|May|June|July|August|September|"
+        r"October|November|December)\s+(20\d{2})",
         link_text,
         flags=re.IGNORECASE,
     )
@@ -65,36 +60,32 @@ def extract_month_label(link_text, pdf_url):
     if text_match:
         month_name = text_match.group(1).lower()
         year = text_match.group(2)
-        return f"{year}-{month_names[month_name]}"
+        return f"{year}-{month_map[month_name]}"
 
     return None
 
 
-def extract_pdf_links(page):
-    """
-    Read actual PDF links from the official archive page.
-    Returns a list of dictionaries with link text, URL, month, and revision status.
-    """
-    anchors = page.locator("a").evaluate_all(
+def get_published_pdf_links(archive_page):
+    anchors = archive_page.locator("a").evaluate_all(
         """
         anchors => anchors.map(anchor => ({
             text: (anchor.innerText || "").trim(),
-            href: anchor.href || "",
             raw_href: anchor.getAttribute("href") || ""
         }))
         """
     )
 
-    found_links = []
+    reports = []
     seen_urls = set()
 
     for anchor in anchors:
         link_text = clean_text(anchor["text"])
         raw_href = anchor["raw_href"]
-        pdf_url = urljoin(CASELOAD_PAGE_URL, raw_href)
 
         if not raw_href.lower().split("?")[0].endswith(".pdf"):
             continue
+
+        pdf_url = urljoin(CASELOAD_PAGE_URL, raw_href)
 
         if pdf_url in seen_urls:
             continue
@@ -102,17 +93,17 @@ def extract_pdf_links(page):
         month_label = extract_month_label(link_text, pdf_url)
 
         if month_label is None:
-            print(f"--> Skipping unrecognized PDF link: {link_text} | {pdf_url}")
+            print(f"Skipping PDF with no recognized month: {link_text}")
             continue
 
         year = int(month_label[:4])
 
-        if year < START_YEAR or year > CURRENT_YEAR:
+        if year < START_YEAR or year > END_YEAR:
             continue
 
         seen_urls.add(pdf_url)
 
-        found_links.append(
+        reports.append(
             {
                 "month": month_label,
                 "year": year,
@@ -122,27 +113,22 @@ def extract_pdf_links(page):
             }
         )
 
-    found_links.sort(
-        key=lambda item: (
-            item["month"],
-            not item["revised"],
-            item["link_text"],
+    reports.sort(
+        key=lambda report: (
+            report["month"],
+            not report["revised"],
+            report["link_text"],
         )
     )
 
-    return found_links
+    return reports
 
 
-def extract_pdf_pages(pdf_path):
-    """
-    Extract every page as a list of non-empty text rows.
-    Each text row remains a list so the original table-like structure is retained.
-    """
-    month_tables = {}
+def extract_pdf_text_rows(pdf_file_path):
+    reader = PdfReader(str(pdf_file_path))
+    pages = {}
 
-    reader = PdfReader(str(pdf_path))
-
-    for page_index, pdf_page in enumerate(reader.pages, start=1):
+    for page_number, pdf_page in enumerate(reader.pages, start=1):
         page_text = pdf_page.extract_text() or ""
 
         if not page_text.strip():
@@ -166,81 +152,80 @@ def extract_pdf_pages(pdf_path):
                 clean_rows.append(cells)
 
         if clean_rows:
-            month_tables[f"page_{page_index}"] = clean_rows
+            pages[f"page_{page_number}"] = clean_rows
 
-    return month_tables
+    return pages
 
 
-def download_and_extract(page, report):
-    """
-    Download one published PDF link, verify it is actually a PDF,
-    extract page text, then delete the temporary file.
-    """
+def process_report(pdf_page, report):
     month_label = report["month"]
     pdf_url = report["pdf_url"]
     temporary_pdf = TEMP_DIR / f"{month_label}.pdf"
 
-    print(f"\nRequesting {month_label}: {pdf_url}")
+    print(f"\nProcessing {month_label}")
+    print(f"PDF URL: {pdf_url}")
 
-    response = page.goto(
+    response = pdf_page.goto(
         pdf_url,
         wait_until="domcontentloaded",
         timeout=60000,
     )
 
     if response is None:
-        print(f"--> Skipped {month_label}: no response received.")
-        return None
+        print("Skipped: no response received.")
+        return None, "no_response"
 
     status_code = response.status
+    response_bytes = response.body()
     content_type = response.headers.get("content-type", "")
-    pdf_bytes = response.body()
 
-    print(f"--> Final URL: {page.url}")
-    print(f"--> HTTP status: {status_code}")
-    print(f"--> Content type: {content_type}")
+    print(f"Final URL: {pdf_page.url}")
+    print(f"HTTP status: {status_code}")
+    print(f"Content type: {content_type}")
 
     if status_code != 200:
-        print(f"--> Skipped {month_label}: HTTP {status_code}.")
-        return None
+        print(f"Skipped: HTTP status {status_code}.")
+        return None, f"http_{status_code}"
 
-    if not pdf_bytes.startswith(b"%PDF"):
-        preview = pdf_bytes[:80].decode("utf-8", errors="replace")
-        print(f"--> Skipped {month_label}: returned non-PDF content.")
-        print(f"--> Response preview: {preview!r}")
-        return None
+    if not response_bytes.startswith(b"%PDF"):
+        response_preview = response_bytes[:100].decode(
+            "utf-8",
+            errors="replace",
+        )
 
-    temporary_pdf.write_bytes(pdf_bytes)
+        print("Skipped: response is not a PDF.")
+        print(f"Response preview: {response_preview!r}")
+
+        return None, "not_a_pdf"
+
+    temporary_pdf.write_bytes(response_bytes)
 
     try:
-        month_tables = extract_pdf_pages(temporary_pdf)
+        extracted_pages = extract_pdf_text_rows(temporary_pdf)
     except Exception as error:
-        print(f"--> Extraction error for {month_label}: {error}")
-        return None
+        print(f"Skipped: PDF extraction failed: {error}")
+        return None, f"extraction_error: {error}"
     finally:
         if temporary_pdf.exists():
             temporary_pdf.unlink()
 
-    if not month_tables:
-        print(f"--> Skipped {month_label}: PDF contained no extractable text.")
-        return None
+    if not extracted_pages:
+        print("Skipped: no extractable text found in PDF.")
+        return None, "no_extractable_text"
 
-    print(
-        f"--> Added {month_label}: "
-        f"{len(month_tables):,} extractable PDF page(s)."
-    )
+    print(f"Success: extracted {len(extracted_pages)} page(s).")
 
-    return month_tables
+    return extracted_pages, "extracted"
 
 
 def main():
     print("Starting OTDA Monthly Caseload Statistics pipeline.")
     print(f"Archive page: {CASELOAD_PAGE_URL}")
-    print(f"Years requested: {START_YEAR} through {CURRENT_YEAR}")
+    print(f"Years requested: {START_YEAR} through {END_YEAR}")
 
     master_caseload_object = {}
-    report_metadata = []
-    skipped_reports = []
+    extracted_reports = []
+    skipped_or_failed_reports = []
 
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
@@ -252,7 +237,7 @@ def main():
 
         archive_page = context.new_page()
 
-        print("\nReading the official OTDA archive page...")
+        print("\nLoading official OTDA caseload archive page...")
 
         archive_response = archive_page.goto(
             CASELOAD_PAGE_URL,
@@ -260,50 +245,54 @@ def main():
             timeout=60000,
         )
 
-        if archive_response is None or archive_response.status != 200:
-            status = None if archive_response is None else archive_response.status
+        if archive_response is None:
+            browser.close()
+            raise RuntimeError("The OTDA archive page did not return a response.")
+
+        if archive_response.status != 200:
+            status_code = archive_response.status
             browser.close()
             raise RuntimeError(
-                f"Could not retrieve the OTDA archive page. HTTP status: {status}"
+                f"Could not load OTDA archive page. HTTP status: {status_code}"
             )
 
-        pdf_links = extract_pdf_links(archive_page)
+        reports = get_published_pdf_links(archive_page)
 
-        print(f"Found {len(pdf_links):,} published OTDA PDF link(s).")
+        print(f"Found {len(reports)} monthly PDF report link(s).")
 
         pdf_page = context.new_page()
 
-        for report in pdf_links:
+        for report in reports:
             month_label = report["month"]
 
             try:
-                month_tables = download_and_extract(pdf_page, report)
+                extracted_pages, outcome = process_report(pdf_page, report)
 
-                if month_tables is not None:
-                    master_caseload_object[month_label] = month_tables
+                if extracted_pages is not None:
+                    master_caseload_object[month_label] = extracted_pages
 
-                    report_metadata.append(
+                    extracted_reports.append(
                         {
                             **report,
                             "status": "extracted",
-                            "pages_extracted": len(month_tables),
+                            "pages_extracted": len(extracted_pages),
                         }
                     )
                 else:
-                    skipped_reports.append(
+                    skipped_or_failed_reports.append(
                         {
                             **report,
-                            "status": "skipped",
+                            "status": outcome,
                         }
                     )
 
             except Exception as error:
-                print(f"--> Error processing {month_label}: {error}")
+                print(f"Error processing {month_label}: {error}")
 
-                skipped_reports.append(
+                skipped_or_failed_reports.append(
                     {
                         **report,
-                        "status": "error",
+                        "status": "unexpected_error",
                         "error": str(error),
                     }
                 )
@@ -312,40 +301,38 @@ def main():
 
         browser.close()
 
-    output_data = {
+    master_output = {
         "source_page": CASELOAD_PAGE_URL,
         "scraped_at_utc": datetime.now(timezone.utc).isoformat(),
         "start_year": START_YEAR,
-        "end_year": CURRENT_YEAR,
+        "end_year": END_YEAR,
         "reports_extracted": len(master_caseload_object),
-        "reports_skipped_or_failed": len(skipped_reports),
+        "reports_skipped_or_failed": len(skipped_or_failed_reports),
         "reports": master_caseload_object,
     }
 
+    metadata_output = {
+        "source_page": CASELOAD_PAGE_URL,
+        "scraped_at_utc": datetime.now(timezone.utc).isoformat(),
+        "extracted_reports": extracted_reports,
+        "skipped_or_failed_reports": skipped_or_failed_reports,
+    }
+
     OUTPUT_JSON.write_text(
-        json.dumps(output_data, indent=2, ensure_ascii=False),
+        json.dumps(master_output, indent=2, ensure_ascii=False),
         encoding="utf-8",
     )
 
     METADATA_JSON.write_text(
-        json.dumps(
-            {
-                "source_page": CASELOAD_PAGE_URL,
-                "scraped_at_utc": datetime.now(timezone.utc).isoformat(),
-                "extracted_reports": report_metadata,
-                "skipped_or_failed_reports": skipped_reports,
-            },
-            indent=2,
-            ensure_ascii=False,
-        ),
+        json.dumps(metadata_output, indent=2, ensure_ascii=False),
         encoding="utf-8",
     )
 
     print("\nPipeline complete.")
-    print(f"Reports extracted: {len(master_caseload_object):,}")
-    print(f"Reports skipped or failed: {len(skipped_reports):,}")
-    print(f"Main data file written: {OUTPUT_JSON}")
-    print(f"Metadata file written: {METADATA_JSON}")
+    print(f"Reports extracted: {len(master_caseload_object)}")
+    print(f"Reports skipped or failed: {len(skipped_or_failed_reports)}")
+    print(f"Created: {OUTPUT_JSON}")
+    print(f"Created: {METADATA_JSON}")
 
 
 if __name__ == "__main__":
