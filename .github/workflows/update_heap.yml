@@ -30,7 +30,7 @@ jobs:
 
       - name: Parse local HEAP PDFs into JSON
         run: |
-          python scripts/parse_local_heap_pdfs.py
+          python scripts/update_heap.py
 
       - name: Commit updated JSON if anything changed
         run: |
