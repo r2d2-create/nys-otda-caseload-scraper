@@ -8,13 +8,13 @@
     "status": "parsed"
   },
   "2025-09": {
-    "last_checked": "2026-09-15",
-    "reason": "no_valid_pdf_downloaded; browser_title='otda.ny.gov'; browser_url='https://otda.ny.gov/resources/caseload/2025/2025-09-stats.pdf'",
+    "heap_line_count": 379,
     "report_date": "2025-09-01",
     "report_id": "2025-09",
     "source_file": "2025-09-stats.pdf",
+    "source_sha256": "f28a56491a9c685f8a0cc95ba776af3e4cec48d06b174718dabffefd839e9e89",
     "source_url": "https://otda.ny.gov/resources/caseload/2025/2025-09-stats.pdf",
-    "status": "browser_download_failed"
+    "status": "parsed"
   },
   "2026-09": {
     "last_checked": "2026-09-15",
