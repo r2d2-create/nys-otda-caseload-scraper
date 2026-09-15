@@ -10,10 +10,9 @@ from bs4 import BeautifulSoup
 from pypdf import PdfReader
 
 CASELOAD_PAGE_URL = "https://otda.ny.gov/resources/caseload/"
-PDF_BASE_URL = "https://otda.ny.gov/resources/caseload/"
-
 OUTPUT_JSON = Path("otda_master_database.json")
 METADATA_JSON = Path("otda_pdf_metadata.json")
+ARCHIVE_HTML = Path("otda_archive_response.html")
 TEMP_DIR = Path("temp_otda_pdfs")
 
 START_YEAR = 2001
@@ -41,7 +40,7 @@ def clean_text(value):
     return re.sub(r"\s+", " ", str(value)).strip()
 
 
-def month_label_from_text(link_text):
+def extract_month_label(link_text):
     month_map = {
         "january": "01",
         "february": "02",
@@ -86,16 +85,26 @@ def get_published_reports():
 
     response.raise_for_status()
 
+    ARCHIVE_HTML.write_text(response.text, encoding="utf-8")
+
     print(f"Archive HTTP status: {response.status_code}")
     print(f"Archive content type: {response.headers.get('content-type', '')}")
+    print(f"Archive HTML length: {len(response.text):,} characters")
+    print(f"Saved archive HTML to: {ARCHIVE_HTML}")
 
     soup = BeautifulSoup(response.text, "html.parser")
 
+    all_links = soup.find_all("a", href=True)
+
+    print(f"All anchor links found: {len(all_links):,}")
+
     reports_by_month = {}
 
-    for anchor in soup.find_all("a"):
+    for anchor in all_links:
         link_text = clean_text(anchor.get_text(" ", strip=True))
-        month_label = month_label_from_text(link_text)
+        raw_href = clean_text(anchor.get("href", ""))
+
+        month_label = extract_month_label(link_text)
 
         if month_label is None:
             continue
@@ -105,15 +114,13 @@ def get_published_reports():
         if year < START_YEAR or year > END_YEAR:
             continue
 
-        raw_href = clean_text(anchor.get("href", ""))
+        pdf_url = urljoin(CASELOAD_PAGE_URL, raw_href)
 
-        if raw_href:
-            pdf_url = urljoin(CASELOAD_PAGE_URL, raw_href)
-        else:
-            pdf_url = urljoin(
-                PDF_BASE_URL,
-                f"{year}/{month_label}-stats.pdf",
-            )
+        if not raw_href:
+            print(f"Skipping {link_text}: no href found.")
+            continue
+
+        existing_report = reports_by_month.get(month_label)
 
         report = {
             "month": month_label,
@@ -124,15 +131,12 @@ def get_published_reports():
             "revised": "revised" in link_text.lower(),
         }
 
-        existing_report = reports_by_month.get(month_label)
-
         if existing_report is None:
             reports_by_month[month_label] = report
         elif report["revised"] and not existing_report["revised"]:
             reports_by_month[month_label] = report
 
     reports = list(reports_by_month.values())
-
     reports.sort(key=lambda report: report["month"])
 
     return reports
@@ -155,23 +159,17 @@ def download_pdf(session, report):
         allow_redirects=True,
     )
 
-    content_type = response.headers.get("content-type", "")
-
     print(f"Final URL: {response.url}")
     print(f"HTTP status: {response.status_code}")
-    print(f"Content type: {content_type}")
+    print(f"Content type: {response.headers.get('content-type', '')}")
 
     if response.status_code != 200:
-        print(f"Skipped: HTTP {response.status_code}.")
         return None, f"http_{response.status_code}", response.url
 
     if not response.content.startswith(b"%PDF"):
-        preview = response.content[:100].decode(
-            "utf-8",
-            errors="replace",
-        )
+        preview = response.content[:100].decode("utf-8", errors="replace")
 
-        print("Skipped: response was not a PDF.")
+        print("Skipped: response is not a PDF.")
         print(f"Response preview: {preview!r}")
 
         return None, "not_a_pdf", response.url
@@ -227,7 +225,7 @@ def main():
     if len(reports) == 0:
         raise RuntimeError(
             "No monthly report links were found on the OTDA archive page. "
-            "Stopping so an empty database is not created."
+            "The downloaded HTML file has been saved for inspection."
         )
 
     master_caseload_object = {}
@@ -258,8 +256,6 @@ def main():
                 page_tables = extract_pdf_text_rows(pdf_file)
 
                 if not page_tables:
-                    print("Skipped: no extractable text found.")
-
                     skipped_or_failed_reports.append(
                         {
                             **report,
