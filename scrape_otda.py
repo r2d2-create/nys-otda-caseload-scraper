@@ -26,7 +26,7 @@ with sync_playwright() as p:
         for month in months:
             month_label = f"{year}-{month}"
             pdf_url = (
-                "https://otda.ny.gov/resources/caseload/"
+                "https://otda.ny.gov/resources/"
                 f"{year}/{month_label}-stats.pdf"
             )
 
