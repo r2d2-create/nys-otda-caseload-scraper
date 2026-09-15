@@ -5,6 +5,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urljoin
 
+import requests
+from bs4 import BeautifulSoup
 from pypdf import PdfReader
 from playwright.sync_api import sync_playwright
 
@@ -21,6 +23,15 @@ USER_AGENT = (
     "AppleWebKit/537.36 (KHTML, like Gecko) "
     "Chrome/120.0.0.0 Safari/537.36"
 )
+
+HTTP_HEADERS = {
+    "User-Agent": USER_AGENT,
+    "Accept": (
+        "text/html,application/xhtml+xml,application/xml;q=0.9,"
+        "application/pdf;q=0.9,*/*;q=0.8"
+    ),
+    "Accept-Language": "en-US,en;q=0.9",
+}
 
 TEMP_DIR.mkdir(exist_ok=True)
 
@@ -65,22 +76,28 @@ def extract_month_label(link_text, pdf_url):
     return None
 
 
-def get_published_pdf_links(archive_page):
-    anchors = archive_page.locator("a").evaluate_all(
-        """
-        anchors => anchors.map(anchor => ({
-            text: (anchor.innerText || "").trim(),
-            raw_href: anchor.getAttribute("href") || ""
-        }))
-        """
+def get_published_pdf_links():
+    print("\nLoading official OTDA caseload archive page with requests...")
+
+    response = requests.get(
+        CASELOAD_PAGE_URL,
+        headers=HTTP_HEADERS,
+        timeout=60,
     )
+
+    response.raise_for_status()
+
+    print(f"Archive HTTP status: {response.status_code}")
+    print(f"Archive content type: {response.headers.get('content-type', '')}")
+
+    soup = BeautifulSoup(response.text, "html.parser")
 
     reports = []
     seen_urls = set()
 
-    for anchor in anchors:
-        link_text = clean_text(anchor["text"])
-        raw_href = anchor["raw_href"]
+    for anchor in soup.find_all("a", href=True):
+        raw_href = anchor["href"].strip()
+        link_text = clean_text(anchor.get_text(" ", strip=True))
 
         if not raw_href.lower().split("?")[0].endswith(".pdf"):
             continue
@@ -93,7 +110,7 @@ def get_published_pdf_links(archive_page):
         month_label = extract_month_label(link_text, pdf_url)
 
         if month_label is None:
-            print(f"Skipping PDF with no recognized month: {link_text}")
+            print(f"Skipping unrecognized PDF link: {link_text} | {pdf_url}")
             continue
 
         year = int(month_label[:4])
@@ -227,6 +244,16 @@ def main():
     extracted_reports = []
     skipped_or_failed_reports = []
 
+    reports = get_published_pdf_links()
+
+    print(f"Found {len(reports)} monthly PDF report link(s).")
+
+    if len(reports) == 0:
+        raise RuntimeError(
+            "No PDF links were found on the OTDA archive page. "
+            "Stopping so the workflow does not create an empty database."
+        )
+
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
 
@@ -234,31 +261,6 @@ def main():
             user_agent=USER_AGENT,
             accept_downloads=True,
         )
-
-        archive_page = context.new_page()
-
-        print("\nLoading official OTDA caseload archive page...")
-
-        archive_response = archive_page.goto(
-            CASELOAD_PAGE_URL,
-            wait_until="networkidle",
-            timeout=60000,
-        )
-
-        if archive_response is None:
-            browser.close()
-            raise RuntimeError("The OTDA archive page did not return a response.")
-
-        if archive_response.status != 200:
-            status_code = archive_response.status
-            browser.close()
-            raise RuntimeError(
-                f"Could not load OTDA archive page. HTTP status: {status_code}"
-            )
-
-        reports = get_published_pdf_links(archive_page)
-
-        print(f"Found {len(reports)} monthly PDF report link(s).")
 
         pdf_page = context.new_page()
 
