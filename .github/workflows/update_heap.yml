@@ -27,8 +27,8 @@ jobs:
 
       - name: Install Python dependencies
         run: |
-          python3 -m pip install --user --upgrade pip
-          python3 -m pip install --user -r requirements.txt
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements.txt
 
       - name: Download direct OTDA PDFs and parse HEAP pages
         run: |
