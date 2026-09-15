@@ -21,16 +21,16 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install Python packages
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pypdf playwright
           python -m playwright install --with-deps chromium
 
-      - name: Run scraper
+      - name: Run OTDA scraper
         run: python scrape_otda.py
 
-      - name: Upload OTDA scraper output
+      - name: Upload OTDA output files
         uses: actions/upload-artifact@v4
         with:
           name: otda-caseload-output
