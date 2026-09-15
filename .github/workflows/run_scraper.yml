@@ -1,13 +1,15 @@
 name: Run OTDA Caseload Scraper
 
 on:
-  workflow_dispatch: # Allows manual trigger via the UI
+  workflow_dispatch: # Keeps the manual "Run workflow" click button active
+  schedule:
+    # This CRON layout forces GitHub to run this scraper completely automatically
+    # at midnight every single Sunday morning (UTC), entirely hands-free.
+    - cron: '0 0 * * 0'
 
 jobs:
   scrape-data:
     runs-on: ubuntu-latest
-    
-    # Force explicit top-level write authorization clearance
     permissions:
       contents: write
     
@@ -31,5 +33,5 @@ jobs:
     - name: Automatically Save and Push JSON Files
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
-        commit_message: "Auto-update clean caseload JSON data tables"
-        file_pattern: "*.json"
+        commit_message: "Automated schedule: Caseload master database update"
+        file_pattern: "otda_master_database.json"
