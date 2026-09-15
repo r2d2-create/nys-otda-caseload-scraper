@@ -29,11 +29,13 @@ jobs:
       - name: Run OTDA scraper
         run: python scrape_otda.py
 
-      - name: Upload OTDA output files
+      - name: Upload OTDA workflow files
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: otda-caseload-output
           path: |
             otda_master_database.json
             otda_pdf_metadata.json
-          if-no-files-found: error
+            otda_archive_response.html
+          if-no-files-found: warn
