@@ -24,8 +24,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pypdf playwright requests beautifulsoup4
-          python -m playwright install --with-deps chromium
+          pip install pypdf requests beautifulsoup4
 
       - name: Run OTDA scraper
         run: python scrape_otda.py
