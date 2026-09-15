@@ -25,7 +25,10 @@ with sync_playwright() as p:
     for year in years:
         for month in months:
             month_label = f"{year}-{month}"
-            pdf_url = ("https://otda.ny.gov/resources/caseload/"f"{year}/{month_label}-stats.pdf")
+            pdf_url = (
+                "https://otda.ny.gov/resources/caseload/"
+                f"{year}/{month_label}-stats.pdf"
+            )
 
             try:
                 response = page.goto(pdf_url, wait_until="networkidle")
