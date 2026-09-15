@@ -6,33 +6,44 @@ import re
 import sys
 from datetime import date
 from pathlib import Path
-from time import sleep
+from time import sleep, time
 from typing import Any, Dict, List, Optional, Tuple
 
-import requests
 from pypdf import PdfReader
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
 
 # ============================================================
 # SETTINGS
 # ============================================================
 
-# First test: target one missing PDF only.
-# Once it works, change START_YEAR and MONTHS_TO_CHECK gradually.
-START_YEAR = 2024
-MONTHS_TO_CHECK = [9]
+# First browser-download test:
+# The repository already has 2024-09-stats.pdf.
+# This tells the script to try only the missing 2025-09 PDF.
+TARGET_REPORTS = [
+    (2025, 9),
+]
 
-# Maximum number of missing PDFs to download in one workflow run.
-# Leave at 1 for the first real test.
+# Later, add more explicit reports gradually, for example:
+# TARGET_REPORTS = [
+#     (2024, 8),
+#     (2024, 10),
+#     (2024, 11),
+#     (2024, 12),
+#     (2025, 1),
+# ]
+
+# Do not have a single workflow run open more than this many PDFs.
 MAX_NEW_PDFS_PER_RUN = 1
 
-# Slow, respectful delay between any direct PDF requests.
-REQUEST_DELAY_SECONDS = 10
+# Time to wait for a direct-PDF browser download to finish.
+DOWNLOAD_TIMEOUT_SECONDS = 120
 
-# Do not attempt the report for the current month; it may not yet exist.
-TODAY = date.today()
+# Polite pause before a subsequent report, if you later raise the limit.
+SECONDS_BETWEEN_DOWNLOADS = 12
 
-# Generate direct PDF URLs only. Never scrape the archive index page.
+# Direct URL root. This script never requests the archive listing page.
 OTDA_BASE_URL = "https://otda.ny.gov/resources/caseload"
 
 # Repository paths.
@@ -44,22 +55,16 @@ HEAP_LINES_PATH = DATA_DIR / "heap_lines.json"
 HEAP_MANIFEST_PATH = DATA_DIR / "heap_manifest.json"
 HEAP_FAILURES_PATH = DATA_DIR / "heap_failures.json"
 
-# A transparent User-Agent. Replace the email before long-term use.
-REQUEST_HEADERS = {
-    "User-Agent": (
-        "nys-otda-caseload-scraper/1.0 "
-        "(research; contact: replace-with-your-email@example.com)"
-    ),
-    "Accept": "application/pdf,application/octet-stream;q=0.9,*/*;q=0.1",
-}
+# Store a dedicated Chrome profile in your Mac home directory.
+# This lets Chrome retain site state without using your everyday browser profile.
+CHROME_PROFILE_DIR = Path.home() / "otda_chrome_profile"
 
-# Match source filenames such as 2024-09-stats.pdf.
+# Detect names like 2024-09-stats.pdf.
 FILENAME_PATTERN = re.compile(
     r"(?P<year>\d{4})[-_](?P<month>\d{2})",
     flags=re.IGNORECASE,
 )
 
-# HEAP tables/pages have these phrases.
 HEAP_PAGE_PATTERN = re.compile(
     r"HOME\s+ENERGY\s+ASSISTANCE\s+PROGRAM|\bHEAP\b",
     flags=re.IGNORECASE,
@@ -101,7 +106,7 @@ def write_json(path: Path, value: Any) -> None:
 
 
 # ============================================================
-# FILE AND URL HELPERS
+# URL / FILE HELPERS
 # ============================================================
 
 def report_id(year: int, month: int) -> str:
@@ -115,7 +120,7 @@ def direct_pdf_url(year: int, month: int) -> str:
     )
 
 
-def pdf_path(year: int, month: int) -> Path:
+def expected_pdf_path(year: int, month: int) -> Path:
     return RAW_PDF_DIR / f"{year}-{month:02d}-stats.pdf"
 
 
@@ -145,130 +150,185 @@ def file_sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def candidate_reports() -> List[Tuple[int, int]]:
-    """
-    Generate direct URL targets. No HTML archive-page request occurs.
-    """
-    candidates = []
-
-    for year in range(START_YEAR, TODAY.year + 1):
-        for month in MONTHS_TO_CHECK:
-            if 1 <= month <= 12:
-                report_month = date(year, month, 1)
-
-                # Exclude the current calendar month and future dates.
-                if report_month < date(TODAY.year, TODAY.month, 1):
-                    candidates.append((year, month))
-
-    return sorted(candidates)
-
-
 # ============================================================
-# DOWNLOAD HELPERS
+# CHROME / SELENIUM DOWNLOAD HELPERS
 # ============================================================
 
-def response_is_pdf(response: requests.Response) -> bool:
+def start_chrome() -> webdriver.Chrome:
     """
-    A 200 response is not enough. Confirm the actual file is a PDF.
+    Start visible Chrome with a dedicated persistent profile and make
+    direct PDFs download into this repository's raw_pdfs directory.
     """
-    return (
-        response.status_code == 200
-        and len(response.content) >= 1_000
-        and response.content[:4] == b"%PDF"
+    CHROME_PROFILE_DIR.mkdir(parents=True, exist_ok=True)
+
+    options = Options()
+
+    # Keep it visible so you can inspect any OTDA security or access page.
+    options.add_argument("--start-maximized")
+
+    # Persistent, separate automation profile.
+    options.add_argument(
+        f"--user-data-dir={CHROME_PROFILE_DIR.resolve()}"
     )
 
+    # Tell Chrome to treat PDFs as downloads.
+    preferences = {
+        "download.default_directory": str(RAW_PDF_DIR.resolve()),
+        "download.prompt_for_download": False,
+        "download.directory_upgrade": True,
+        "plugins.always_open_pdf_externally": True,
+        "profile.default_content_setting_values.automatic_downloads": 1,
+        "safebrowsing.enabled": True,
+    }
 
-def request_failure_reason(
-    response: Optional[requests.Response],
-    error_message: Optional[str],
-) -> str:
-    if error_message:
-        return f"request_error: {error_message}"
+    options.add_experimental_option("prefs", preferences)
 
-    if response is None:
-        return "request_failed_without_response"
+    driver = webdriver.Chrome(options=options)
 
-    if response.status_code in (401, 403):
-        return f"access_denied_http_{response.status_code}"
+    driver.execute_cdp_cmd(
+        "Page.setDownloadBehavior",
+        {
+            "behavior": "allow",
+            "downloadPath": str(RAW_PDF_DIR.resolve()),
+        },
+    )
 
-    if response.status_code == 404:
-        return "not_found"
-
-    if response.status_code != 200:
-        return f"http_{response.status_code}"
-
-    if not response.content.startswith(b"%PDF"):
-        content_type = response.headers.get("Content-Type", "unknown")
-        return f"not_a_pdf_content_type_{content_type}"
-
-    return "unknown_download_error"
+    return driver
 
 
-def download_pdf(
-    session: requests.Session,
+def snapshot_valid_pdfs() -> Dict[str, float]:
+    """Capture existing valid PDF names and timestamps."""
+    return {
+        path.name: path.stat().st_mtime
+        for path in RAW_PDF_DIR.glob("*.pdf")
+        if is_valid_pdf(path)
+    }
+
+
+def page_looks_blocked(driver: webdriver.Chrome) -> bool:
+    """
+    Detect access/error pages; this only stops the workflow.
+    It does not attempt to defeat access controls.
+    """
+    try:
+        page_text = driver.find_element("tag name", "body").text.lower()
+    except Exception:
+        page_text = ""
+
+    blocked_signals = [
+        "access denied",
+        "request blocked",
+        "forbidden",
+        "captcha",
+        "security verification",
+        "unusual traffic",
+        "incident id",
+        "error 403",
+    ]
+
+    return any(signal in page_text for signal in blocked_signals)
+
+
+def wait_for_download(
+    before_files: Dict[str, float],
+    timeout_seconds: int = DOWNLOAD_TIMEOUT_SECONDS,
+) -> Optional[Path]:
+    """
+    Wait for a new valid PDF and ensure Chrome has finished its
+    temporary .crdownload file.
+    """
+    started = time()
+
+    while time() - started < timeout_seconds:
+        partial_downloads = list(RAW_PDF_DIR.glob("*.crdownload"))
+
+        valid_pdfs = [
+            path for path in RAW_PDF_DIR.glob("*.pdf")
+            if is_valid_pdf(path)
+        ]
+
+        newly_downloaded = [
+            path for path in valid_pdfs
+            if path.name not in before_files
+        ]
+
+        if newly_downloaded and not partial_downloads:
+            return max(
+                newly_downloaded,
+                key=lambda path: path.stat().st_mtime,
+            )
+
+        sleep(1)
+
+    return None
+
+
+def download_one_pdf_with_chrome(
+    driver: webdriver.Chrome,
     year: int,
     month: int,
-) -> Tuple[bool, Optional[str]]:
+) -> Tuple[bool, str]:
     """
-    Download one direct PDF to raw_pdfs/.
-
-    Returns:
-      (True, None) on success/already present
-      (False, reason) if unavailable
+    Open a direct PDF URL in Chrome and save its download locally.
     """
-    destination = pdf_path(year, month)
+    destination = expected_pdf_path(year, month)
 
     if is_valid_pdf(destination):
-        return True, None
+        return True, "already_exists"
+
+    if destination.exists():
+        destination.unlink()
 
     url = direct_pdf_url(year, month)
-
-    response = None
-    error_message = None
+    before_files = snapshot_valid_pdfs()
 
     try:
-        response = session.get(
-            url,
-            timeout=(20, 120),
-            allow_redirects=True,
+        driver.get(url)
+        sleep(5)
+    except Exception as exc:
+        return False, f"browser_navigation_error: {exc}"
+
+    if page_looks_blocked(driver):
+        return False, "browser_displayed_access_or_security_page"
+
+    downloaded_file = wait_for_download(before_files)
+
+    if downloaded_file is None:
+        title = driver.title or "(no title)"
+        current_url = driver.current_url or "(no URL)"
+
+        return (
+            False,
+            "no_valid_pdf_downloaded; "
+            f"browser_title={title!r}; browser_url={current_url!r}",
         )
-    except requests.RequestException as exc:
-        error_message = str(exc)
-
-    if response is None or not response_is_pdf(response):
-        return False, request_failure_reason(response, error_message)
-
-    temporary_path = destination.with_suffix(".pdf.part")
 
     try:
-        temporary_path.write_bytes(response.content)
-
-        if not is_valid_pdf(temporary_path):
-            temporary_path.unlink(missing_ok=True)
-            return False, "downloaded_file_failed_pdf_validation"
-
-        temporary_path.replace(destination)
-        return True, None
-
+        if downloaded_file != destination:
+            downloaded_file.replace(destination)
     except OSError as exc:
-        temporary_path.unlink(missing_ok=True)
-        return False, f"local_write_error: {exc}"
+        return False, f"could_not_rename_download: {exc}"
+
+    if not is_valid_pdf(destination):
+        return False, "download_failed_pdf_validation"
+
+    return True, "downloaded"
 
 
 # ============================================================
-# PDF PARSING
+# HEAP PDF TEXT EXTRACTION
 # ============================================================
 
 def clean_lines(page_text: str) -> List[str]:
-    lines = []
+    results = []
 
     for line in page_text.splitlines():
         normalized = re.sub(r"\s+", " ", line).strip()
 
         if normalized:
-            lines.append(normalized)
+            results.append(normalized)
 
-    return lines
+    return results
 
 
 def classify_heap_page(page_text: str) -> str:
@@ -289,21 +349,21 @@ def classify_heap_page(page_text: str) -> str:
     return "heap_related"
 
 
-def extract_heap_lines(pdf_file: Path) -> List[Dict[str, Any]]:
-    filename_match = FILENAME_PATTERN.search(pdf_file.name)
+def extract_heap_lines(pdf_path: Path) -> List[Dict[str, Any]]:
+    match = FILENAME_PATTERN.search(pdf_path.name)
 
-    if not filename_match:
+    if not match:
         raise ValueError(
-            "PDF filename must include YYYY-MM, for example 2024-09-stats.pdf."
+            "Filename must contain YYYY-MM, e.g. 2024-09-stats.pdf."
         )
 
-    year = int(filename_match.group("year"))
-    month = int(filename_match.group("month"))
+    year = int(match.group("year"))
+    month = int(match.group("month"))
     key = report_id(year, month)
-    source_hash = file_sha256(pdf_file)
+    source_hash = file_sha256(pdf_path)
 
-    reader = PdfReader(str(pdf_file))
-    output_rows: List[Dict[str, Any]] = []
+    reader = PdfReader(str(pdf_path))
+    rows: List[Dict[str, Any]] = []
 
     for page_number, page in enumerate(reader.pages, start=1):
         page_text = page.extract_text() or ""
@@ -313,27 +373,30 @@ def extract_heap_lines(pdf_file: Path) -> List[Dict[str, Any]]:
 
         table_match = TABLE_NUMBER_PATTERN.search(page_text)
         table_number = table_match.group(1) if table_match else None
-        table_type = classify_heap_page(page_text)
+        heap_type = classify_heap_page(page_text)
 
-        for line_number, raw_text in enumerate(clean_lines(page_text), start=1):
-            output_rows.append(
+        for line_number, raw_text in enumerate(
+            clean_lines(page_text),
+            start=1,
+        ):
+            rows.append(
                 {
                     "report_id": key,
                     "report_date": f"{year}-{month:02d}-01",
                     "report_year": year,
                     "report_month": month,
-                    "source_file": pdf_file.name,
+                    "source_file": pdf_path.name,
                     "source_url": direct_pdf_url(year, month),
                     "source_sha256": source_hash,
                     "page_number": page_number,
                     "table_number_detected": table_number,
-                    "heap_table_type": table_type,
+                    "heap_table_type": heap_type,
                     "line_number": line_number,
                     "raw_text": raw_text,
                 }
             )
 
-    return output_rows
+    return rows
 
 
 # ============================================================
@@ -357,60 +420,144 @@ def main() -> int:
     if not isinstance(failures, list):
         raise ValueError("data/heap_failures.json must contain a JSON list.")
 
-    print("Starting local direct-PDF download and HEAP parsing.")
+    print("Starting Chrome-based direct-PDF download and HEAP parsing.")
     print(f"Repository root: {REPO_ROOT}")
-    print(f"Download directory: {RAW_PDF_DIR}")
-    print(f"Maximum new PDFs this run: {MAX_NEW_PDFS_PER_RUN}")
+    print(f"Raw PDF directory: {RAW_PDF_DIR}")
+    print(f"Chrome profile: {CHROME_PROFILE_DIR}")
     print()
 
-    session = requests.Session()
-    session.headers.update(REQUEST_HEADERS)
-
+    driver: Optional[webdriver.Chrome] = None
     downloaded_this_run = 0
     parsed_this_run = 0
     changed = False
 
-    # --------------------------------------------------------
-    # 1. DOWNLOAD ONLY MISSING PDFs
-    # --------------------------------------------------------
+    try:
+        # ----------------------------------------------------
+        # 1. DOWNLOAD MISSING DIRECT PDFs THROUGH CHROME
+        # ----------------------------------------------------
+        missing_targets = [
+            (year, month)
+            for year, month in TARGET_REPORTS
+            if not is_valid_pdf(expected_pdf_path(year, month))
+        ]
 
-    for year, month in candidate_reports():
-        if downloaded_this_run >= MAX_NEW_PDFS_PER_RUN:
-            break
+        if missing_targets:
+            driver = start_chrome()
 
-        key = report_id(year, month)
-        destination = pdf_path(year, month)
+            for year, month in missing_targets:
+                if downloaded_this_run >= MAX_NEW_PDFS_PER_RUN:
+                    break
 
-        if is_valid_pdf(destination):
-            print(f"PDF already available: {destination.name}")
-            continue
+                key = report_id(year, month)
+                url = direct_pdf_url(year, month)
 
-        url = direct_pdf_url(year, month)
+                print(f"Opening in Chrome: {key}: {url}")
 
-        print(f"Downloading {key}: {url}")
+                success, message = download_one_pdf_with_chrome(
+                    driver,
+                    year,
+                    month,
+                )
 
-        downloaded, reason = download_pdf(session, year, month)
+                if success:
+                    print(f"  Success: {message}")
+                    downloaded_this_run += 1
+                    changed = True
 
-        if downloaded:
-            print(f"  Downloaded: {destination.name}")
-            downloaded_this_run += 1
-            changed = True
+                    failures = [
+                        row for row in failures
+                        if row.get("report_id") != key
+                    ]
+                else:
+                    print(f"  Download failed: {message}")
 
-            failures = [
-                row for row in failures
+                    manifest[key] = {
+                        "report_id": key,
+                        "report_date": f"{year}-{month:02d}-01",
+                        "source_url": url,
+                        "source_file": expected_pdf_path(year, month).name,
+                        "status": "browser_download_failed",
+                        "reason": message,
+                        "last_checked": date.today().isoformat(),
+                    }
+
+                    failures = [
+                        row for row in failures
+                        if row.get("report_id") != key
+                    ]
+
+                    failures.append(
+                        {
+                            "report_id": key,
+                            "source_url": url,
+                            "checked_on": date.today().isoformat(),
+                            "reason": message,
+                        }
+                    )
+
+                    changed = True
+
+                    # Stop after one failure; do not issue more requests.
+                    break
+
+                sleep(SECONDS_BETWEEN_DOWNLOADS)
+
+        # ----------------------------------------------------
+        # 2. PARSE EVERY LOCAL PDF, OLD AND NEW
+        # ----------------------------------------------------
+        for pdf_path in sorted(RAW_PDF_DIR.glob("*.pdf")):
+            match = FILENAME_PATTERN.search(pdf_path.name)
+
+            if not match:
+                print(f"Skipping unexpected filename: {pdf_path.name}")
+                continue
+
+            year = int(match.group("year"))
+            month = int(match.group("month"))
+            key = report_id(year, month)
+            current_hash = file_sha256(pdf_path)
+
+            already_parsed = (
+                manifest.get(key, {}).get("status") == "parsed"
+                and manifest.get(key, {}).get("source_sha256") == current_hash
+            )
+
+            if already_parsed:
+                print(f"Already parsed: {pdf_path.name}")
+                continue
+
+            print(f"Parsing {pdf_path.name}...")
+
+            try:
+                extracted_rows = extract_heap_lines(pdf_path)
+            except Exception as exc:
+                print(f"  Parse failed: {exc}")
+
+                manifest[key] = {
+                    "report_id": key,
+                    "source_file": pdf_path.name,
+                    "status": "pdf_parse_failed",
+                    "reason": str(exc),
+                }
+
+                changed = True
+                continue
+
+            heap_lines = [
+                row for row in heap_lines
                 if row.get("report_id") != key
             ]
-        else:
-            print(f"  Download unavailable: {reason}")
+
+            heap_lines.extend(extracted_rows)
 
             manifest[key] = {
                 "report_id": key,
                 "report_date": f"{year}-{month:02d}-01",
-                "source_url": url,
-                "source_file": destination.name,
-                "status": "download_failed",
-                "reason": reason,
-                "last_checked": TODAY.isoformat(),
+                "source_file": pdf_path.name,
+                "source_url": direct_pdf_url(year, month),
+                "source_sha256": current_hash,
+                "status": "parsed",
+                "heap_line_count": len(extracted_rows),
             }
 
             failures = [
@@ -418,97 +565,18 @@ def main() -> int:
                 if row.get("report_id") != key
             ]
 
-            failures.append(
-                {
-                    "report_id": key,
-                    "source_url": url,
-                    "checked_on": TODAY.isoformat(),
-                    "reason": reason,
-                }
-            )
+            print(f"  Extracted {len(extracted_rows)} HEAP text lines.")
 
+            parsed_this_run += 1
             changed = True
 
-            # Do not repeatedly query if OTDA denies programmatic access.
-            if reason.startswith("access_denied_http_") or reason.startswith("request_error:"):
-                print("Stopping after access/request failure.")
-                break
-
-        sleep(REQUEST_DELAY_SECONDS)
+    finally:
+        if driver is not None:
+            driver.quit()
 
     # --------------------------------------------------------
-    # 2. PARSE ALL LOCAL PDFs, INCLUDING EXISTING ONES
+    # 3. WRITE OUTPUTS
     # --------------------------------------------------------
-
-    for local_pdf in sorted(RAW_PDF_DIR.glob("*.pdf")):
-        filename_match = FILENAME_PATTERN.search(local_pdf.name)
-
-        if not filename_match:
-            print(f"Skipping unrecognized filename: {local_pdf.name}")
-            continue
-
-        year = int(filename_match.group("year"))
-        month = int(filename_match.group("month"))
-        key = report_id(year, month)
-        current_hash = file_sha256(local_pdf)
-
-        already_parsed = (
-            manifest.get(key, {}).get("status") == "parsed"
-            and manifest.get(key, {}).get("source_sha256") == current_hash
-        )
-
-        if already_parsed:
-            print(f"Already parsed: {local_pdf.name}")
-            continue
-
-        print(f"Parsing {local_pdf.name}...")
-
-        try:
-            parsed_rows = extract_heap_lines(local_pdf)
-        except Exception as exc:
-            print(f"  Parse failed: {exc}")
-
-            manifest[key] = {
-                "report_id": key,
-                "source_file": local_pdf.name,
-                "status": "pdf_parse_failed",
-                "reason": str(exc),
-            }
-
-            changed = True
-            continue
-
-        heap_lines = [
-            row for row in heap_lines
-            if row.get("report_id") != key
-        ]
-
-        heap_lines.extend(parsed_rows)
-
-        manifest[key] = {
-            "report_id": key,
-            "report_date": f"{year}-{month:02d}-01",
-            "source_file": local_pdf.name,
-            "source_url": direct_pdf_url(year, month),
-            "source_sha256": current_hash,
-            "status": "parsed",
-            "heap_line_count": len(parsed_rows),
-        }
-
-        failures = [
-            row for row in failures
-            if row.get("report_id") != key
-        ]
-
-        print(f"  Extracted {len(parsed_rows)} HEAP text lines.")
-
-        parsed_this_run += 1
-        changed = True
-
-    # --------------------------------------------------------
-    # 3. SAVE JSON
-    # --------------------------------------------------------
-
     heap_lines.sort(
         key=lambda row: (
             row.get("report_date", ""),
