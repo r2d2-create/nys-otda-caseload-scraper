@@ -1,23 +1,49 @@
-name: Test self-hosted runner
+name: Download and parse OTDA HEAP PDFs
 
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
+concurrency:
+  group: otda-heap-local-update
+  cancel-in-progress: false
+
 jobs:
-  test-runner:
+  update-heap:
     runs-on: self-hosted
 
     steps:
-      - name: Show machine and paths
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Show runner information
         run: |
           echo "HOME=$HOME"
           echo "GITHUB_WORKSPACE=$GITHUB_WORKSPACE"
-          echo "RUNNER_TEMP=$RUNNER_TEMP"
           whoami
-          pwd
-          ls -la
+          python3 --version
 
-      - name: Create a test file in workspace
+      - name: Install Python dependencies
         run: |
-          echo "Self-hosted runner works" > runner_test.txt
-          ls -la runner_test.txt
+          python3 -m pip install --user --upgrade pip
+          python3 -m pip install --user -r requirements.txt
+
+      - name: Download direct OTDA PDFs and parse HEAP pages
+        run: |
+          python3 scripts/update_heap.py
+
+      - name: Commit PDFs and JSON data if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add raw_pdfs/ data/
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Update OTDA HEAP PDFs and data"
+            git push
+          fi
