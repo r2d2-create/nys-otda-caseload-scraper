@@ -6,8 +6,6 @@ on:
 
   # Checks once each Monday at 15:20 UTC.
   # GitHub Actions schedules use UTC.
-  schedule:
-    - cron: "20 15 * * 1"
 
 # Required because this workflow commits changed JSON files
 # back into the same repository.
