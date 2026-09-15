@@ -3,7 +3,6 @@ from __future__ import annotations
 import hashlib
 import json
 import re
-import sys
 from datetime import date
 from pathlib import Path
 from time import sleep, time
@@ -18,14 +17,14 @@ from selenium.webdriver.chrome.options import Options
 # SETTINGS
 # ============================================================
 
-# First browser-download test:
 # The repository already has 2024-09-stats.pdf.
-# This tells the script to try only the missing 2025-09 PDF.
+# First automated browser test: download the missing 2025-09 report.
 TARGET_REPORTS = [
     (2025, 9),
 ]
 
-# Later, add more explicit reports gradually, for example:
+# Later, add reports gradually, for example:
+#
 # TARGET_REPORTS = [
 #     (2024, 8),
 #     (2024, 10),
@@ -33,17 +32,27 @@ TARGET_REPORTS = [
 #     (2024, 12),
 #     (2025, 1),
 # ]
+#
+# Do not add hundreds of targets at once.
 
-# Do not have a single workflow run open more than this many PDFs.
+# Maximum missing PDF downloads in a single manual workflow run.
 MAX_NEW_PDFS_PER_RUN = 1
 
-# Time to wait for a direct-PDF browser download to finish.
+# Maximum time to wait for Chrome to finish downloading one PDF.
 DOWNLOAD_TIMEOUT_SECONDS = 120
 
-# Polite pause before a subsequent report, if you later raise the limit.
+# Delay before a later download if MAX_NEW_PDFS_PER_RUN is increased.
 SECONDS_BETWEEN_DOWNLOADS = 12
 
-# Direct URL root. This script never requests the archive listing page.
+# Chrome must have been started manually with this remote-debugging port:
+#
+# open -na "Google Chrome" --args \
+#   --remote-debugging-port=9222 \
+#   --user-data-dir="$HOME/otda_chrome_profile"
+#
+CHROME_DEBUGGER_ADDRESS = "127.0.0.1:9222"
+
+# Direct report URL root. The script never visits/scrapes the archive page.
 OTDA_BASE_URL = "https://otda.ny.gov/resources/caseload"
 
 # Repository paths.
@@ -55,16 +64,13 @@ HEAP_LINES_PATH = DATA_DIR / "heap_lines.json"
 HEAP_MANIFEST_PATH = DATA_DIR / "heap_manifest.json"
 HEAP_FAILURES_PATH = DATA_DIR / "heap_failures.json"
 
-# Store a dedicated Chrome profile in your Mac home directory.
-# This lets Chrome retain site state without using your everyday browser profile.
-CHROME_PROFILE_DIR = Path.home() / "otda_chrome_profile"
-
-# Detect names like 2024-09-stats.pdf.
+# Recognizes files such as 2024-09-stats.pdf.
 FILENAME_PATTERN = re.compile(
     r"(?P<year>\d{4})[-_](?P<month>\d{2})",
     flags=re.IGNORECASE,
 )
 
+# Identifies PDF pages containing HEAP tables/terms.
 HEAP_PAGE_PATTERN = re.compile(
     r"HOME\s+ENERGY\s+ASSISTANCE\s+PROGRAM|\bHEAP\b",
     flags=re.IGNORECASE,
@@ -81,6 +87,7 @@ TABLE_NUMBER_PATTERN = re.compile(
 # ============================================================
 
 def load_json(path: Path, default_value: Any) -> Any:
+    """Load JSON or return a safe default for first-time execution."""
     if not path.exists():
         return default_value
 
@@ -92,6 +99,7 @@ def load_json(path: Path, default_value: Any) -> Any:
 
 
 def write_json(path: Path, value: Any) -> None:
+    """Write stable and readable JSON for repository history."""
     path.parent.mkdir(parents=True, exist_ok=True)
 
     with path.open("w", encoding="utf-8") as file:
@@ -110,10 +118,16 @@ def write_json(path: Path, value: Any) -> None:
 # ============================================================
 
 def report_id(year: int, month: int) -> str:
+    """Return an ID such as 2025-09."""
     return f"{year}-{month:02d}"
 
 
 def direct_pdf_url(year: int, month: int) -> str:
+    """
+    Generate a direct OTDA PDF URL.
+
+    No OTDA archive/index page is ever requested.
+    """
     return (
         f"{OTDA_BASE_URL}/{year}/"
         f"{year}-{month:02d}-stats.pdf"
@@ -121,10 +135,12 @@ def direct_pdf_url(year: int, month: int) -> str:
 
 
 def expected_pdf_path(year: int, month: int) -> Path:
+    """Return the expected PDF file location inside this repository."""
     return RAW_PDF_DIR / f"{year}-{month:02d}-stats.pdf"
 
 
 def is_valid_pdf(path: Path) -> bool:
+    """Check file existence, a minimum size, and the PDF byte signature."""
     if not path.exists() or path.stat().st_size < 1_000:
         return False
 
@@ -136,6 +152,7 @@ def is_valid_pdf(path: Path) -> bool:
 
 
 def file_sha256(path: Path) -> str:
+    """Create a stable source-PDF fingerprint."""
     digest = hashlib.sha256()
 
     with path.open("rb") as file:
@@ -154,50 +171,21 @@ def file_sha256(path: Path) -> str:
 # CHROME / SELENIUM DOWNLOAD HELPERS
 # ============================================================
 
-def start_chrome() -> webdriver.Chrome:
+def attach_to_existing_chrome() -> webdriver.Chrome:
     """
-    Start visible Chrome with a dedicated persistent profile and make
-    direct PDFs download into this repository's raw_pdfs directory.
-    """
-    CHROME_PROFILE_DIR.mkdir(parents=True, exist_ok=True)
+    Attach Selenium to a Chrome window you manually started with
+    remote debugging enabled on port 9222.
 
+    This does not launch Chrome and does not alter your browser profile.
+    """
     options = Options()
+    options.debugger_address = CHROME_DEBUGGER_ADDRESS
 
-    # Keep it visible so you can inspect any OTDA security or access page.
-    options.add_argument("--start-maximized")
-
-    # Persistent, separate automation profile.
-    options.add_argument(
-        f"--user-data-dir={CHROME_PROFILE_DIR.resolve()}"
-    )
-
-    # Tell Chrome to treat PDFs as downloads.
-    preferences = {
-        "download.default_directory": str(RAW_PDF_DIR.resolve()),
-        "download.prompt_for_download": False,
-        "download.directory_upgrade": True,
-        "plugins.always_open_pdf_externally": True,
-        "profile.default_content_setting_values.automatic_downloads": 1,
-        "safebrowsing.enabled": True,
-    }
-
-    options.add_experimental_option("prefs", preferences)
-
-    driver = webdriver.Chrome(options=options)
-
-    driver.execute_cdp_cmd(
-        "Page.setDownloadBehavior",
-        {
-            "behavior": "allow",
-            "downloadPath": str(RAW_PDF_DIR.resolve()),
-        },
-    )
-
-    return driver
+    return webdriver.Chrome(options=options)
 
 
 def snapshot_valid_pdfs() -> Dict[str, float]:
-    """Capture existing valid PDF names and timestamps."""
+    """Record existing valid PDFs before the browser opens a new URL."""
     return {
         path.name: path.stat().st_mtime
         for path in RAW_PDF_DIR.glob("*.pdf")
@@ -207,15 +195,15 @@ def snapshot_valid_pdfs() -> Dict[str, float]:
 
 def page_looks_blocked(driver: webdriver.Chrome) -> bool:
     """
-    Detect access/error pages; this only stops the workflow.
-    It does not attempt to defeat access controls.
+    Detect a browser-visible access/error page. This is only for
+    transparent failure handling; it does not evade access controls.
     """
     try:
-        page_text = driver.find_element("tag name", "body").text.lower()
+        body_text = driver.find_element("tag name", "body").text.lower()
     except Exception:
-        page_text = ""
+        body_text = ""
 
-    blocked_signals = [
+    signals = [
         "access denied",
         "request blocked",
         "forbidden",
@@ -224,9 +212,10 @@ def page_looks_blocked(driver: webdriver.Chrome) -> bool:
         "unusual traffic",
         "incident id",
         "error 403",
+        "this site can't be reached",
     ]
 
-    return any(signal in page_text for signal in blocked_signals)
+    return any(signal in body_text for signal in signals)
 
 
 def wait_for_download(
@@ -234,8 +223,9 @@ def wait_for_download(
     timeout_seconds: int = DOWNLOAD_TIMEOUT_SECONDS,
 ) -> Optional[Path]:
     """
-    Wait for a new valid PDF and ensure Chrome has finished its
-    temporary .crdownload file.
+    Wait for a new completed valid PDF in raw_pdfs/.
+
+    Chrome may initially create a .crdownload temporary file.
     """
     started = time()
 
@@ -269,7 +259,8 @@ def download_one_pdf_with_chrome(
     month: int,
 ) -> Tuple[bool, str]:
     """
-    Open a direct PDF URL in Chrome and save its download locally.
+    Tell the already-open remote-debug Chrome session to open a direct
+    PDF URL, then look for the completed local download.
     """
     destination = expected_pdf_path(year, month)
 
@@ -320,18 +311,20 @@ def download_one_pdf_with_chrome(
 # ============================================================
 
 def clean_lines(page_text: str) -> List[str]:
-    results = []
+    """Normalize page text into nonblank line-level records."""
+    output = []
 
     for line in page_text.splitlines():
         normalized = re.sub(r"\s+", " ", line).strip()
 
         if normalized:
-            results.append(normalized)
+            output.append(normalized)
 
-    return results
+    return output
 
 
 def classify_heap_page(page_text: str) -> str:
+    """Classify a HEAP page without assuming a fixed historic layout."""
     normalized = re.sub(r"\s+", " ", page_text).upper()
 
     if "NON-EMERGENCY" in normalized or "NON EMERGENCY" in normalized:
@@ -350,20 +343,26 @@ def classify_heap_page(page_text: str) -> str:
 
 
 def extract_heap_lines(pdf_path: Path) -> List[Dict[str, Any]]:
-    match = FILENAME_PATTERN.search(pdf_path.name)
+    """
+    Extract all text lines from pages mentioning HEAP.
 
-    if not match:
+    Line-level output preserves evidence from historical PDFs whose
+    table layouts can vary across years.
+    """
+    filename_match = FILENAME_PATTERN.search(pdf_path.name)
+
+    if not filename_match:
         raise ValueError(
             "Filename must contain YYYY-MM, e.g. 2024-09-stats.pdf."
         )
 
-    year = int(match.group("year"))
-    month = int(match.group("month"))
+    year = int(filename_match.group("year"))
+    month = int(filename_match.group("month"))
     key = report_id(year, month)
     source_hash = file_sha256(pdf_path)
 
     reader = PdfReader(str(pdf_path))
-    rows: List[Dict[str, Any]] = []
+    output_rows: List[Dict[str, Any]] = []
 
     for page_number, page in enumerate(reader.pages, start=1):
         page_text = page.extract_text() or ""
@@ -373,13 +372,13 @@ def extract_heap_lines(pdf_path: Path) -> List[Dict[str, Any]]:
 
         table_match = TABLE_NUMBER_PATTERN.search(page_text)
         table_number = table_match.group(1) if table_match else None
-        heap_type = classify_heap_page(page_text)
+        table_type = classify_heap_page(page_text)
 
         for line_number, raw_text in enumerate(
             clean_lines(page_text),
             start=1,
         ):
-            rows.append(
+            output_rows.append(
                 {
                     "report_id": key,
                     "report_date": f"{year}-{month:02d}-01",
@@ -390,13 +389,13 @@ def extract_heap_lines(pdf_path: Path) -> List[Dict[str, Any]]:
                     "source_sha256": source_hash,
                     "page_number": page_number,
                     "table_number_detected": table_number,
-                    "heap_table_type": heap_type,
+                    "heap_table_type": table_type,
                     "line_number": line_number,
                     "raw_text": raw_text,
                 }
             )
 
-    return rows
+    return output_rows
 
 
 # ============================================================
@@ -420,10 +419,10 @@ def main() -> int:
     if not isinstance(failures, list):
         raise ValueError("data/heap_failures.json must contain a JSON list.")
 
-    print("Starting Chrome-based direct-PDF download and HEAP parsing.")
+    print("Starting Chrome-attached direct-PDF download and HEAP parsing.")
     print(f"Repository root: {REPO_ROOT}")
     print(f"Raw PDF directory: {RAW_PDF_DIR}")
-    print(f"Chrome profile: {CHROME_PROFILE_DIR}")
+    print(f"Chrome debugger: {CHROME_DEBUGGER_ADDRESS}")
     print()
 
     driver: Optional[webdriver.Chrome] = None
@@ -433,7 +432,7 @@ def main() -> int:
 
     try:
         # ----------------------------------------------------
-        # 1. DOWNLOAD MISSING DIRECT PDFs THROUGH CHROME
+        # 1. DOWNLOAD MISSING DIRECT PDFs VIA EXISTING CHROME
         # ----------------------------------------------------
         missing_targets = [
             (year, month)
@@ -442,7 +441,15 @@ def main() -> int:
         ]
 
         if missing_targets:
-            driver = start_chrome()
+            try:
+                driver = attach_to_existing_chrome()
+            except Exception as exc:
+                raise RuntimeError(
+                    "Could not connect to Chrome on 127.0.0.1:9222. "
+                    "Close all Chrome windows and start the dedicated "
+                    "remote-debug Chrome session before running the workflow. "
+                    f"Original error: {exc}"
+                ) from exc
 
             for year, month in missing_targets:
                 if downloaded_this_run >= MAX_NEW_PDFS_PER_RUN:
@@ -451,7 +458,7 @@ def main() -> int:
                 key = report_id(year, month)
                 url = direct_pdf_url(year, month)
 
-                print(f"Opening in Chrome: {key}: {url}")
+                print(f"Opening in attached Chrome: {key}: {url}")
 
                 success, message = download_one_pdf_with_chrome(
                     driver,
@@ -460,7 +467,8 @@ def main() -> int:
                 )
 
                 if success:
-                    print(f"  Success: {message}")
+                    print(f"  Download success: {message}")
+
                     downloaded_this_run += 1
                     changed = True
 
@@ -497,7 +505,7 @@ def main() -> int:
 
                     changed = True
 
-                    # Stop after one failure; do not issue more requests.
+                    # Stop after a first failure—never hammer the host.
                     break
 
                 sleep(SECONDS_BETWEEN_DOWNLOADS)
@@ -571,11 +579,13 @@ def main() -> int:
             changed = True
 
     finally:
-        if driver is not None:
-            driver.quit()
+        # Do not use driver.quit() here.
+        # The Chrome session was started by you manually and must remain
+        # running for later self-hosted GitHub Actions workflow runs.
+        pass
 
     # --------------------------------------------------------
-    # 3. WRITE OUTPUTS
+    # 3. WRITE JSON OUTPUTS
     # --------------------------------------------------------
     heap_lines.sort(
         key=lambda row: (
