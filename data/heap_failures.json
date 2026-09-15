@@ -11,7 +11,7 @@
   },
   {
     "checked_on": "2026-09-15",
-    "reason": "request_error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))",
+    "reason": "no_valid_pdf_downloaded; browser_title='otda.ny.gov'; browser_url='https://otda.ny.gov/resources/caseload/2025/2025-09-stats.pdf'",
     "report_id": "2025-09",
     "source_url": "https://otda.ny.gov/resources/caseload/2025/2025-09-stats.pdf"
   },
