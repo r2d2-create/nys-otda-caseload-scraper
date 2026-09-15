@@ -18,21 +18,13 @@ from selenium.webdriver.chrome.options import Options
 # ============================================================
 
 # The repository already has 2024-09-stats.pdf.
-# First automated browser test: download the missing 2025-09 report.
-TARGET_REPORTS = [
-    (2025, 9),
-]
 
-# Later, add reports gradually, for example:
-#
-# TARGET_REPORTS = [
-#     (2024, 8),
-#     (2024, 10),
-#     (2024, 11),
-#     (2024, 12),
-#     (2025, 1),
-# ]
-#
+TARGET_REPORTS = (
+    [(2024, 8)]
+    + [(2024, month) for month in range(10, 13)]
+    + [(2025, 1)]
+)
+
 # Do not add hundreds of targets at once.
 
 # Maximum missing PDF downloads in a single manual workflow run.
