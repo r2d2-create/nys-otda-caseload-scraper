@@ -116,6 +116,9 @@ def write_json(path: Path, value: Any) -> None:
 # ============================================================
 # URL / FILE HELPERS
 # ============================================================
+def report_id(year: int, month: int) -> str:
+    """Return a stable report identifier such as 2025-09."""
+    return f"{year}-{month:02d}"
 
 def direct_pdf_url(year: int, month: int) -> str:
     """
