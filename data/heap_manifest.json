@@ -1,4 +1,13 @@
 {
+  "2001-01": {
+    "last_checked": "2026-09-15",
+    "reason": "no_valid_pdf_downloaded; browser_title='Page Not Found | OTDA'; browser_url='https://otda.ny.gov/resources/caseload/2001/2001-01-stats.pdf'",
+    "report_date": "2001-01-01",
+    "report_id": "2001-01",
+    "source_file": "2001-01-stats.pdf",
+    "source_url": "https://otda.ny.gov/resources/caseload/2001/2001-01-stats.pdf",
+    "status": "browser_download_failed"
+  },
   "2024-08": {
     "heap_line_count": 25,
     "report_date": "2024-08-01",
