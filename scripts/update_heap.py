@@ -19,16 +19,26 @@ from selenium.webdriver.chrome.options import Options
 
 # The repository already has 2024-09-stats.pdf.
 
-TARGET_REPORTS = (
-    [(2024, 8)]
-    + [(2024, month) for month in range(10, 13)]
-    + [(2025, 1)]
-)
+# Generate every monthly report from January 2001 through the current month.
+#
+# The end year is exclusive in range(), so date.today().year + 1 includes
+# the current year.
+START_YEAR = 2001
+START_MONTH = 1
 
-# Do not add hundreds of targets at once.
+TODAY = date.today()
 
-# Maximum missing PDF downloads in a single manual workflow run.
-MAX_NEW_PDFS_PER_RUN = 20
+TARGET_REPORTS = [
+    (year, month)
+    for year in range(START_YEAR, TODAY.year + 1)
+    for month in range(1, 13)
+    if (year, month) >= (START_YEAR, START_MONTH)
+    and (year, month) <= (TODAY.year, TODAY.month)
+]
+
+# None means no per-run limit. Use a finite number such as 5 or 12 if you
+# want to process the history in controlled batches instead.
+MAX_NEW_PDFS_PER_RUN: Optional[int] = None
 
 # Maximum time to wait for Chrome to finish downloading one PDF.
 DOWNLOAD_TIMEOUT_SECONDS = 120
