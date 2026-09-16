@@ -464,11 +464,11 @@ def main() -> int:
         # ----------------------------------------------------
         # 1. DOWNLOAD MISSING DIRECT PDFs VIA EXISTING CHROME
         # ----------------------------------------------------
-        missing_targets = [
-            (year, month)
-            for year, month in TARGET_REPORTS
-            if not is_valid_pdf(expected_pdf_path(year, month))
-        ]
+            missing_targets = [
+                (year, month)
+                for year, month in TARGET_REPORTS
+                if not is_valid_pdf(expected_pdf_path(year, month))
+            ]
 
             if missing_targets:
                 try:
@@ -487,61 +487,61 @@ def main() -> int:
                         and downloaded_this_run >= MAX_NEW_PDFS_PER_RUN
                     ):
                         break
-    
+
                     key = report_id(year, month)
                     url = direct_pdf_url(year, month)
-    
+
                     print(f"Opening in attached Chrome: {key}: {url}")
-    
+
                     success, message = download_one_pdf_with_chrome(
                         driver,
                         year,
                         month,
                     )
 
-                if success:
-                    print(f"  Download success: {message}")
+                    if success:
+                        print(f"  Download success: {message}")
 
-                    downloaded_this_run += 1
-                    changed = True
+                        downloaded_this_run += 1
+                        changed = True
 
-                    failures = [
-                        row for row in failures
-                        if row.get("report_id") != key
-                    ]
-                else:
-                    print(f"  Download failed: {message}")
+                        failures = [
+                            row for row in failures
+                            if row.get("report_id") != key
+                        ]
+                    else:
+                        print(f"  Download failed: {message}")
 
-                    manifest[key] = {
-                        "report_id": key,
-                        "report_date": f"{year}-{month:02d}-01",
-                        "source_url": url,
-                        "source_file": expected_pdf_path(year, month).name,
-                        "status": "browser_download_failed",
-                        "reason": message,
-                        "last_checked": date.today().isoformat(),
-                    }
-
-                    failures = [
-                        row for row in failures
-                        if row.get("report_id") != key
-                    ]
-
-                    failures.append(
-                        {
+                        manifest[key] = {
                             "report_id": key,
+                            "report_date": f"{year}-{month:02d}-01",
                             "source_url": url,
-                            "checked_on": date.today().isoformat(),
+                            "source_file": expected_pdf_path(year, month).name,
+                            "status": "browser_download_failed",
                             "reason": message,
+                            "last_checked": date.today().isoformat(),
                         }
-                    )
 
-                    changed = True
+                        failures = [
+                            row for row in failures
+                            if row.get("report_id") != key
+                        ]
 
-                    # Stop after a first failure—never hammer the host.
-                    break
+                        failures.append(
+                            {
+                                "report_id": key,
+                                "source_url": url,
+                                "checked_on": date.today().isoformat(),
+                                "reason": message,
+                            }
+                        )
 
-                sleep(SECONDS_BETWEEN_DOWNLOADS)
+                        changed = True
+
+                        # Stop after a first failure—never hammer the host.
+                        break
+
+                    sleep(SECONDS_BETWEEN_DOWNLOADS)
 
         # ----------------------------------------------------
         # 2. PARSE EVERY LOCAL PDF, OLD AND NEW
