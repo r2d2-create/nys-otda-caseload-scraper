@@ -1,11 +1,155 @@
 {
   "2001-01": {
-    "last_checked": "2026-09-15",
-    "reason": "no_valid_pdf_downloaded; browser_title='Page Not Found | OTDA'; browser_url='https://otda.ny.gov/resources/caseload/2001/2001-01-stats.pdf'",
-    "report_date": "2001-01-01",
+    "reason": "Could not find nonblank text for expected HEAP table(s): Table 25, Table 26, Table 27.",
     "report_id": "2001-01",
     "source_file": "2001-01-stats.pdf",
-    "source_url": "https://otda.ny.gov/resources/caseload/2001/2001-01-stats.pdf",
+    "status": "pdf_parse_failed"
+  },
+  "2001-02": {
+    "reason": "Could not find nonblank text for expected HEAP table(s): Table 25, Table 26, Table 27.",
+    "report_id": "2001-02",
+    "source_file": "2001-02-stats.pdf",
+    "status": "pdf_parse_failed"
+  },
+  "2001-03": {
+    "reason": "Could not find nonblank text for expected HEAP table(s): Table 25, Table 26, Table 27.",
+    "report_id": "2001-03",
+    "source_file": "2001-03-stats.pdf",
+    "status": "pdf_parse_failed"
+  },
+  "2001-04": {
+    "reason": "Could not find nonblank text for expected HEAP table(s): Table 25, Table 26, Table 27.",
+    "report_id": "2001-04",
+    "source_file": "2001-04-stats.pdf",
+    "status": "pdf_parse_failed"
+  },
+  "2001-05": {
+    "reason": "Could not find nonblank text for expected HEAP table(s): Table 25, Table 26, Table 27.",
+    "report_id": "2001-05",
+    "source_file": "2001-05-stats.pdf",
+    "status": "pdf_parse_failed"
+  },
+  "2001-06": {
+    "reason": "Could not find nonblank text for expected HEAP table(s): Table 25, Table 26, Table 27.",
+    "report_id": "2001-06",
+    "source_file": "2001-06-stats.pdf",
+    "status": "pdf_parse_failed"
+  },
+  "2001-07": {
+    "reason": "Could not find nonblank text for expected HEAP table(s): Table 25, Table 26, Table 27.",
+    "report_id": "2001-07",
+    "source_file": "2001-07-stats.pdf",
+    "status": "pdf_parse_failed"
+  },
+  "2001-08": {
+    "reason": "Could not find nonblank text for expected HEAP table(s): Table 25, Table 26, Table 27.",
+    "report_id": "2001-08",
+    "source_file": "2001-08-stats.pdf",
+    "status": "pdf_parse_failed"
+  },
+  "2001-09": {
+    "reason": "Could not find nonblank text for expected HEAP table(s): Table 25, Table 26, Table 27.",
+    "report_id": "2001-09",
+    "source_file": "2001-09-stats.pdf",
+    "status": "pdf_parse_failed"
+  },
+  "2001-10": {
+    "reason": "Could not find nonblank text for expected HEAP table(s): Table 25, Table 26, Table 27.",
+    "report_id": "2001-10",
+    "source_file": "2001-10-stats.pdf",
+    "status": "pdf_parse_failed"
+  },
+  "2001-11": {
+    "reason": "Could not find nonblank text for expected HEAP table(s): Table 25, Table 26, Table 27.",
+    "report_id": "2001-11",
+    "source_file": "2001-11-stats.pdf",
+    "status": "pdf_parse_failed"
+  },
+  "2001-12": {
+    "reason": "Could not find nonblank text for expected HEAP table(s): Table 25, Table 26, Table 27.",
+    "report_id": "2001-12",
+    "source_file": "2001-12-stats.pdf",
+    "status": "pdf_parse_failed"
+  },
+  "2002-01": {
+    "reason": "Could not find nonblank text for expected HEAP table(s): Table 25, Table 26, Table 27.",
+    "report_id": "2002-01",
+    "source_file": "2002-01-stats.pdf",
+    "status": "pdf_parse_failed"
+  },
+  "2002-02": {
+    "reason": "Could not find nonblank text for expected HEAP table(s): Table 25, Table 26, Table 27.",
+    "report_id": "2002-02",
+    "source_file": "2002-02-stats.pdf",
+    "status": "pdf_parse_failed"
+  },
+  "2002-03": {
+    "reason": "Could not find nonblank text for expected HEAP table(s): Table 25, Table 26, Table 27.",
+    "report_id": "2002-03",
+    "source_file": "2002-03-stats.pdf",
+    "status": "pdf_parse_failed"
+  },
+  "2002-04": {
+    "reason": "Could not find nonblank text for expected HEAP table(s): Table 25, Table 26, Table 27.",
+    "report_id": "2002-04",
+    "source_file": "2002-04-stats.pdf",
+    "status": "pdf_parse_failed"
+  },
+  "2002-05": {
+    "reason": "Could not find nonblank text for expected HEAP table(s): Table 25, Table 26, Table 27.",
+    "report_id": "2002-05",
+    "source_file": "2002-05-stats.pdf",
+    "status": "pdf_parse_failed"
+  },
+  "2002-06": {
+    "reason": "Could not find nonblank text for expected HEAP table(s): Table 25, Table 26, Table 27.",
+    "report_id": "2002-06",
+    "source_file": "2002-06-stats.pdf",
+    "status": "pdf_parse_failed"
+  },
+  "2002-07": {
+    "reason": "Could not find nonblank text for expected HEAP table(s): Table 25, Table 26, Table 27.",
+    "report_id": "2002-07",
+    "source_file": "2002-07-stats.pdf",
+    "status": "pdf_parse_failed"
+  },
+  "2002-08": {
+    "reason": "Could not find nonblank text for expected HEAP table(s): Table 25, Table 26, Table 27.",
+    "report_id": "2002-08",
+    "source_file": "2002-08-stats.pdf",
+    "status": "pdf_parse_failed"
+  },
+  "2002-09": {
+    "reason": "Could not find nonblank text for expected HEAP table(s): Table 25, Table 26, Table 27.",
+    "report_id": "2002-09",
+    "source_file": "2002-09-stats.pdf",
+    "status": "pdf_parse_failed"
+  },
+  "2002-10": {
+    "reason": "Could not find nonblank text for expected HEAP table(s): Table 25, Table 26, Table 27.",
+    "report_id": "2002-10",
+    "source_file": "2002-10-stats.pdf",
+    "status": "pdf_parse_failed"
+  },
+  "2002-11": {
+    "reason": "Could not find nonblank text for expected HEAP table(s): Table 25, Table 26, Table 27.",
+    "report_id": "2002-11",
+    "source_file": "2002-11-stats.pdf",
+    "status": "pdf_parse_failed"
+  },
+  "2002-12": {
+    "reason": "Could not find nonblank text for expected HEAP table(s): Table 25, Table 26, Table 27.",
+    "report_id": "2002-12",
+    "source_file": "2002-12-stats.pdf",
+    "status": "pdf_parse_failed"
+  },
+  "2003-01": {
+    "last_checked": "2026-09-15",
+    "reason": "no_valid_pdf_downloaded; browser_title='Page Not Found | OTDA'; browser_url='https://otda.ny.gov/resources/caseload/2003/stats0103.pdf'",
+    "report_date": "2003-01-01",
+    "report_id": "2003-01",
+    "source_file": "2003-01-stats.pdf",
+    "source_url": "https://otda.ny.gov/resources/caseload/2003/stats0103.pdf",
     "status": "browser_download_failed"
   },
   "2024-08": {
