@@ -482,7 +482,9 @@ def main() -> int:
                 ) from exc
 
             for year, month in missing_targets:
-                if downloaded_this_run >= MAX_NEW_PDFS_PER_RUN:
+                    if (MAX_NEW_PDFS_PER_RUN is not None
+                    and downloaded_this_run >= MAX_NEW_PDFS_PER_RUN
+                 ):
                     break
 
                 key = report_id(year, month)
