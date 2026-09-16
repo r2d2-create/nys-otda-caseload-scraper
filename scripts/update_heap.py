@@ -124,38 +124,22 @@ def direct_pdf_url(year: int, month: int) -> str:
     """
     Return the direct OTDA caseload-PDF URL for a reporting month.
 
-    OTDA changed its remote filename convention several times. The local
-    filename remains standardized elsewhere as YYYY-MM-stats.pdf.
+    HEAP begins in April 2006. Six early HEAP reports use nonstandard
+    filenames; October 2006 onward uses YYYY-MM-stats.pdf.
     """
-    month_names = (
-        "JAN",
-        "FEB",
-        "MAR",
-        "APR",
-        "MAY",
-        "JUN",
-        "JUL",
-        "AUG",
-        "SEPT",
-        "OCT",
-        "NOV",
-        "DEC",
+    special_filenames = {
+        (2006, 4): "STATS_APR2006.pdf",
+        (2006, 5): "STATS_MAY2006.pdf",
+        (2006, 6): "STATS_JUNE2006.pdf",
+        (2006, 7): "STATS_JULY2006.pdf",
+        (2006, 8): "STATS_AUGUST2006.pdf",
+        (2006, 9): "STATS_SEPT2006.pdf",
+    }
+
+    filename = special_filenames.get(
+        (year, month),
+        f"{year}-{month:02d}-stats.pdf",
     )
-
-    if 2001 <= year <= 2004:
-        filename = f"stats{month:02d}{year % 100:02d}.pdf"
-
-    elif year == 2005:
-        filename = f"STATS{month:02d}{year % 100:02d}.pdf"
-
-    elif year == 2006 and 1 <= month <= 8:
-        filename = f"STATS_{month_names[month - 1]}{year}.pdf"
-
-    elif year == 2006 and month == 9:
-        filename = "STATS_SEPT_2006.pdf"
-
-    else:
-        filename = f"{year}-{month:02d}-stats.pdf"
 
     return f"{OTDA_BASE_URL}/{year}/{filename}"
 
