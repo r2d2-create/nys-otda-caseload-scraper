@@ -470,34 +470,34 @@ def main() -> int:
             if not is_valid_pdf(expected_pdf_path(year, month))
         ]
 
-        if missing_targets:
-            try:
-                driver = attach_to_existing_chrome()
-            except Exception as exc:
-                raise RuntimeError(
-                    "Could not connect to Chrome on 127.0.0.1:9222. "
-                    "Close all Chrome windows and start the dedicated "
-                    "remote-debug Chrome session before running the workflow. "
-                    f"Original error: {exc}"
-                ) from exc
+            if missing_targets:
+                try:
+                    driver = attach_to_existing_chrome()
+                except Exception as exc:
+                    raise RuntimeError(
+                        "Could not connect to Chrome on 127.0.0.1:9222. "
+                        "Close all Chrome windows and start the dedicated "
+                        "remote-debug Chrome session before running the workflow. "
+                        f"Original error: {exc}"
+                    ) from exc
 
-            for year, month in missing_targets:
-                 if (
-                    MAX_NEW_PDFS_PER_RUN is not None
-                    and downloaded_this_run >= MAX_NEW_PDFS_PER_RUN
-                 ):
-                    break
-
-                key = report_id(year, month)
-                url = direct_pdf_url(year, month)
-
-                print(f"Opening in attached Chrome: {key}: {url}")
-
-                success, message = download_one_pdf_with_chrome(
-                    driver,
-                    year,
-                    month,
-                )
+                for year, month in missing_targets:
+                    if (
+                        MAX_NEW_PDFS_PER_RUN is not None
+                        and downloaded_this_run >= MAX_NEW_PDFS_PER_RUN
+                    ):
+                        break
+    
+                    key = report_id(year, month)
+                    url = direct_pdf_url(year, month)
+    
+                    print(f"Opening in attached Chrome: {key}: {url}")
+    
+                    success, message = download_one_pdf_with_chrome(
+                        driver,
+                        year,
+                        month,
+                    )
 
                 if success:
                     print(f"  Download success: {message}")
