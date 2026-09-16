@@ -23,8 +23,8 @@ from selenium.webdriver.chrome.options import Options
 #
 # The end year is exclusive in range(), so date.today().year + 1 includes
 # the current year.
-START_YEAR = 2001
-START_MONTH = 1
+START_YEAR = 2006
+START_MONTH = 4
 
 TODAY = date.today()
 
