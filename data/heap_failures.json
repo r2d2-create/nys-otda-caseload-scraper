@@ -1,1 +1,8 @@
-[]
+[
+  {
+    "checked_on": "2026-09-16",
+    "reason": "no_valid_pdf_downloaded; browser_title='Page Not Found | OTDA'; browser_url='https://otda.ny.gov/resources/caseload/2006/STATS_JUN2006.pdf'",
+    "report_id": "2006-06",
+    "source_url": "https://otda.ny.gov/resources/caseload/2006/STATS_JUN2006.pdf"
+  }
+]

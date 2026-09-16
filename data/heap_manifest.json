@@ -1,1 +1,29 @@
-{}
+{
+  "2006-04": {
+    "heap_line_count": 33,
+    "report_date": "2006-04-01",
+    "report_id": "2006-04",
+    "source_file": "2006-04-stats.pdf",
+    "source_sha256": "0804b0351a3223e10dc68bb5696687e7aac5ddc79a220fb587e464741b0629d9",
+    "source_url": "https://otda.ny.gov/resources/caseload/2006/STATS_APR2006.pdf",
+    "status": "parsed"
+  },
+  "2006-05": {
+    "heap_line_count": 33,
+    "report_date": "2006-05-01",
+    "report_id": "2006-05",
+    "source_file": "2006-05-stats.pdf",
+    "source_sha256": "a6d1b0758b9005df706d28741e0092881a6408b8123314ca04100fabb1d20d9f",
+    "source_url": "https://otda.ny.gov/resources/caseload/2006/STATS_MAY2006.pdf",
+    "status": "parsed"
+  },
+  "2006-06": {
+    "last_checked": "2026-09-16",
+    "reason": "no_valid_pdf_downloaded; browser_title='Page Not Found | OTDA'; browser_url='https://otda.ny.gov/resources/caseload/2006/STATS_JUN2006.pdf'",
+    "report_date": "2006-06-01",
+    "report_id": "2006-06",
+    "source_file": "2006-06-stats.pdf",
+    "source_url": "https://otda.ny.gov/resources/caseload/2006/STATS_JUN2006.pdf",
+    "status": "browser_download_failed"
+  }
+}
