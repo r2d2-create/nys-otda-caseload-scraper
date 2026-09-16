@@ -81,12 +81,1551 @@
     "status": "parsed"
   },
   "2007-01": {
-    "last_checked": "2026-09-16",
-    "reason": "browser_navigation_error: Message: invalid session id; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalidsessionidexception\nStacktrace:\n0   chromedriver                        0x00000001009b336a chromedriver + 4150122\n1   chromedriver                        0x000000010062b590 chromedriver + 447888\n2   chromedriver                        0x0000000100673be4 chromedriver + 744420\n3   chromedriver                        0x00000001006a70f6 chromedriver + 954614\n4   chromedriver                        0x00000001006a1ed6 chromedriver + 933590\n5   chromedriver                        0x00000001006a1617 chromedriver + 931351\n6   chromedriver                        0x00000001005f725b chromedriver + 234075\n7   chromedriver                        0x00000001005f77c4 chromedriver + 235460\n8   chromedriver                        0x00000001005f7cdf chromedriver + 236767\n9   chromedriver                        0x000000010097cb77 chromedriver + 3926903\n10  chromedriver                        0x00000001009808a4 chromedriver + 3942564\n11  chromedriver                        0x00000001009616ae chromedriver + 3815086\n12  chromedriver                        0x0000000100981372 chromedriver + 3945330\n13  chromedriver                        0x0000000100954279 chromedriver + 3760761\n14  chromedriver                        0x00000001005f5ac7 chromedriver + 228039\n15  dyld                                0x00007ff8169ab1c8 start + 3240\n",
+    "heap_line_count": 26,
     "report_date": "2007-01-01",
     "report_id": "2007-01",
     "source_file": "2007-01-stats.pdf",
+    "source_sha256": "27b07b2295886e61520daa5ef65c020ee6c063a4b0029ce0cd918e4cea76a0a2",
     "source_url": "https://otda.ny.gov/resources/caseload/2007/2007-01-stats.pdf",
+    "status": "parsed"
+  },
+  "2007-02": {
+    "heap_line_count": 18,
+    "report_date": "2007-02-01",
+    "report_id": "2007-02",
+    "source_file": "2007-02-stats.pdf",
+    "source_sha256": "1cadeb401ca9a94eaad3d41508dd6f6a85a72ffdfaf22db4b119edc91f61dde9",
+    "source_url": "https://otda.ny.gov/resources/caseload/2007/2007-02-stats.pdf",
+    "status": "parsed"
+  },
+  "2007-03": {
+    "heap_line_count": 26,
+    "report_date": "2007-03-01",
+    "report_id": "2007-03",
+    "source_file": "2007-03-stats.pdf",
+    "source_sha256": "5d6d00da9a69254ec218291badaa1fdeadce0548219d3cfe62db52f605d97deb",
+    "source_url": "https://otda.ny.gov/resources/caseload/2007/2007-03-stats.pdf",
+    "status": "parsed"
+  },
+  "2007-04": {
+    "heap_line_count": 18,
+    "report_date": "2007-04-01",
+    "report_id": "2007-04",
+    "source_file": "2007-04-stats.pdf",
+    "source_sha256": "39e335de8c5b101b2c50739f4cec5b9382d3578a2945f76501d1cdd3d9454a4b",
+    "source_url": "https://otda.ny.gov/resources/caseload/2007/2007-04-stats.pdf",
+    "status": "parsed"
+  },
+  "2007-05": {
+    "heap_line_count": 18,
+    "report_date": "2007-05-01",
+    "report_id": "2007-05",
+    "source_file": "2007-05-stats.pdf",
+    "source_sha256": "37c1940f26fc169fd637a175faa0bd2873c57147f6bd28031951a8c10898621c",
+    "source_url": "https://otda.ny.gov/resources/caseload/2007/2007-05-stats.pdf",
+    "status": "parsed"
+  },
+  "2007-06": {
+    "heap_line_count": 18,
+    "report_date": "2007-06-01",
+    "report_id": "2007-06",
+    "source_file": "2007-06-stats.pdf",
+    "source_sha256": "304667c462ffeca54bd1bcac552ed28dc4452333f3a07a572d6b6575787a8a93",
+    "source_url": "https://otda.ny.gov/resources/caseload/2007/2007-06-stats.pdf",
+    "status": "parsed"
+  },
+  "2007-07": {
+    "heap_line_count": 26,
+    "report_date": "2007-07-01",
+    "report_id": "2007-07",
+    "source_file": "2007-07-stats.pdf",
+    "source_sha256": "fd09c024a11388b95bb9c46036583114c8265d8794fbcae4c1e4258f789f2345",
+    "source_url": "https://otda.ny.gov/resources/caseload/2007/2007-07-stats.pdf",
+    "status": "parsed"
+  },
+  "2007-08": {
+    "heap_line_count": 26,
+    "report_date": "2007-08-01",
+    "report_id": "2007-08",
+    "source_file": "2007-08-stats.pdf",
+    "source_sha256": "854132693de7619fae122711dea2dfa78faf0add6c9790563f5ce1fbcc5dcb06",
+    "source_url": "https://otda.ny.gov/resources/caseload/2007/2007-08-stats.pdf",
+    "status": "parsed"
+  },
+  "2007-09": {
+    "heap_line_count": 18,
+    "report_date": "2007-09-01",
+    "report_id": "2007-09",
+    "source_file": "2007-09-stats.pdf",
+    "source_sha256": "f1f429808fe46445629e1f9fac31818d83d4575e7f25a2138a6d03083f53de0b",
+    "source_url": "https://otda.ny.gov/resources/caseload/2007/2007-09-stats.pdf",
+    "status": "parsed"
+  },
+  "2007-10": {
+    "heap_line_count": 26,
+    "report_date": "2007-10-01",
+    "report_id": "2007-10",
+    "source_file": "2007-10-stats.pdf",
+    "source_sha256": "cf3dac46a54bbf5daa2d0a032eda8525f0ecfc101bcbccded55b3ff20d2827d9",
+    "source_url": "https://otda.ny.gov/resources/caseload/2007/2007-10-stats.pdf",
+    "status": "parsed"
+  },
+  "2007-11": {
+    "heap_line_count": 26,
+    "report_date": "2007-11-01",
+    "report_id": "2007-11",
+    "source_file": "2007-11-stats.pdf",
+    "source_sha256": "517575d44a50b6041e9f9f69b1c79c191514fba2b9e4523ffb171ce385465bd3",
+    "source_url": "https://otda.ny.gov/resources/caseload/2007/2007-11-stats.pdf",
+    "status": "parsed"
+  },
+  "2007-12": {
+    "heap_line_count": 18,
+    "report_date": "2007-12-01",
+    "report_id": "2007-12",
+    "source_file": "2007-12-stats.pdf",
+    "source_sha256": "83fcbbd2b7d60f1de1eae30ad6f19c9d6f5e3d6a3dbfaaed7d07c1cc48b14f5f",
+    "source_url": "https://otda.ny.gov/resources/caseload/2007/2007-12-stats.pdf",
+    "status": "parsed"
+  },
+  "2008-01": {
+    "heap_line_count": 18,
+    "report_date": "2008-01-01",
+    "report_id": "2008-01",
+    "source_file": "2008-01-stats.pdf",
+    "source_sha256": "4ca835519333ad95b9951335988686f62e7b6b19d0424554374ba4bf420f86ac",
+    "source_url": "https://otda.ny.gov/resources/caseload/2008/2008-01-stats.pdf",
+    "status": "parsed"
+  },
+  "2008-02": {
+    "heap_line_count": 26,
+    "report_date": "2008-02-01",
+    "report_id": "2008-02",
+    "source_file": "2008-02-stats.pdf",
+    "source_sha256": "a1dd08842fe72f5ef0438693bd07fc31ac36ac35c2eef0b9bbb9b2af2d3cb9ec",
+    "source_url": "https://otda.ny.gov/resources/caseload/2008/2008-02-stats.pdf",
+    "status": "parsed"
+  },
+  "2008-03": {
+    "heap_line_count": 18,
+    "report_date": "2008-03-01",
+    "report_id": "2008-03",
+    "source_file": "2008-03-stats.pdf",
+    "source_sha256": "0e013f3831107cf4fbf474ba10cc377ba87554232bc607dc1b05758b299ec9fe",
+    "source_url": "https://otda.ny.gov/resources/caseload/2008/2008-03-stats.pdf",
+    "status": "parsed"
+  },
+  "2008-04": {
+    "heap_line_count": 21,
+    "report_date": "2008-04-01",
+    "report_id": "2008-04",
+    "source_file": "2008-04-stats.pdf",
+    "source_sha256": "12d05c7305ccede65c226bfb198b5ff7d9617a216eb4895e58d23f85fe6e2391",
+    "source_url": "https://otda.ny.gov/resources/caseload/2008/2008-04-stats.pdf",
+    "status": "parsed"
+  },
+  "2008-05": {
+    "heap_line_count": 16,
+    "report_date": "2008-05-01",
+    "report_id": "2008-05",
+    "source_file": "2008-05-stats.pdf",
+    "source_sha256": "b313cd718a793aff6dea147b6feb54a8e02f05840110a66596055d1099371aca",
+    "source_url": "https://otda.ny.gov/resources/caseload/2008/2008-05-stats.pdf",
+    "status": "parsed"
+  },
+  "2008-06": {
+    "heap_line_count": 24,
+    "report_date": "2008-06-01",
+    "report_id": "2008-06",
+    "source_file": "2008-06-stats.pdf",
+    "source_sha256": "1166e5866bacf9fbe0469f9fdf78b560814fc25d6734f55b1d775561bb5c2b20",
+    "source_url": "https://otda.ny.gov/resources/caseload/2008/2008-06-stats.pdf",
+    "status": "parsed"
+  },
+  "2008-07": {
+    "heap_line_count": 29,
+    "report_date": "2008-07-01",
+    "report_id": "2008-07",
+    "source_file": "2008-07-stats.pdf",
+    "source_sha256": "a6d925e73c9d24c530befb3ff28946d46f2e5fc2fe35d81f853f9da032be7920",
+    "source_url": "https://otda.ny.gov/resources/caseload/2008/2008-07-stats.pdf",
+    "status": "parsed"
+  },
+  "2008-08": {
+    "heap_line_count": 21,
+    "report_date": "2008-08-01",
+    "report_id": "2008-08",
+    "source_file": "2008-08-stats.pdf",
+    "source_sha256": "fd29ec596fcba119fa98bbe9c61808f71fb301f75570e29bee8a8401fb09c45d",
+    "source_url": "https://otda.ny.gov/resources/caseload/2008/2008-08-stats.pdf",
+    "status": "parsed"
+  },
+  "2008-09": {
+    "heap_line_count": 21,
+    "report_date": "2008-09-01",
+    "report_id": "2008-09",
+    "source_file": "2008-09-stats.pdf",
+    "source_sha256": "ec8df1c7ec6135dfb02f9c2a2373880c84d7ac7eaeca8a2460e3576dbf6f8625",
+    "source_url": "https://otda.ny.gov/resources/caseload/2008/2008-09-stats.pdf",
+    "status": "parsed"
+  },
+  "2008-10": {
+    "heap_line_count": 24,
+    "report_date": "2008-10-01",
+    "report_id": "2008-10",
+    "source_file": "2008-10-stats.pdf",
+    "source_sha256": "45e72016a60043ae6e921cc3c3b6814a9ca19430f381d0e13da4ac79407cf6c7",
+    "source_url": "https://otda.ny.gov/resources/caseload/2008/2008-10-stats.pdf",
+    "status": "parsed"
+  },
+  "2008-11": {
+    "heap_line_count": 24,
+    "report_date": "2008-11-01",
+    "report_id": "2008-11",
+    "source_file": "2008-11-stats.pdf",
+    "source_sha256": "9354aa43be6e8dfbb26df89777c8f602619202040c9351a630c76fd71bd0c062",
+    "source_url": "https://otda.ny.gov/resources/caseload/2008/2008-11-stats.pdf",
+    "status": "parsed"
+  },
+  "2008-12": {
+    "heap_line_count": 24,
+    "report_date": "2008-12-01",
+    "report_id": "2008-12",
+    "source_file": "2008-12-stats.pdf",
+    "source_sha256": "ccda8847abb6a2c2704b1876d3288c1a2aefb5fe014035c7df2188e2a748297f",
+    "source_url": "https://otda.ny.gov/resources/caseload/2008/2008-12-stats.pdf",
+    "status": "parsed"
+  },
+  "2009-01": {
+    "heap_line_count": 23,
+    "report_date": "2009-01-01",
+    "report_id": "2009-01",
+    "source_file": "2009-01-stats.pdf",
+    "source_sha256": "c08dae3847024f3b9a821579a7947a6e1d5039ad8d7e90f85f89c609adf3875f",
+    "source_url": "https://otda.ny.gov/resources/caseload/2009/2009-01-stats.pdf",
+    "status": "parsed"
+  },
+  "2009-02": {
+    "heap_line_count": 24,
+    "report_date": "2009-02-01",
+    "report_id": "2009-02",
+    "source_file": "2009-02-stats.pdf",
+    "source_sha256": "af2deaaff290841350a99f8506e3397e9b569d1ffb6c8268188548a376e57c44",
+    "source_url": "https://otda.ny.gov/resources/caseload/2009/2009-02-stats.pdf",
+    "status": "parsed"
+  },
+  "2009-03": {
+    "heap_line_count": 29,
+    "report_date": "2009-03-01",
+    "report_id": "2009-03",
+    "source_file": "2009-03-stats.pdf",
+    "source_sha256": "65704e3dcd5ea0eab1b046c7fc9a97d63d10ebd079115f7f4e8d87d6399fbe4f",
+    "source_url": "https://otda.ny.gov/resources/caseload/2009/2009-03-stats.pdf",
+    "status": "parsed"
+  },
+  "2009-04": {
+    "heap_line_count": 16,
+    "report_date": "2009-04-01",
+    "report_id": "2009-04",
+    "source_file": "2009-04-stats.pdf",
+    "source_sha256": "ba3a9729306d8730487f5d85ab820d3fdecbe62cf5774e665d2e5e2d548e86b9",
+    "source_url": "https://otda.ny.gov/resources/caseload/2009/2009-04-stats.pdf",
+    "status": "parsed"
+  },
+  "2009-05": {
+    "heap_line_count": 129,
+    "report_date": "2009-05-01",
+    "report_id": "2009-05",
+    "source_file": "2009-05-stats.pdf",
+    "source_sha256": "93ba8886c01218f10f9904c6e253807fc31dc9fa82f45607c745f5fbc79cd173",
+    "source_url": "https://otda.ny.gov/resources/caseload/2009/2009-05-stats.pdf",
+    "status": "parsed"
+  },
+  "2009-06": {
+    "heap_line_count": 129,
+    "report_date": "2009-06-01",
+    "report_id": "2009-06",
+    "source_file": "2009-06-stats.pdf",
+    "source_sha256": "c1d6f62c2c5e4b6eba9fb4025728bd6657c5aec894678e6e2627a6064332ef72",
+    "source_url": "https://otda.ny.gov/resources/caseload/2009/2009-06-stats.pdf",
+    "status": "parsed"
+  },
+  "2009-07": {
+    "heap_line_count": 129,
+    "report_date": "2009-07-01",
+    "report_id": "2009-07",
+    "source_file": "2009-07-stats.pdf",
+    "source_sha256": "e3b969478a61332a63f53dca547745114e0db33db2c3f64cf5f5d1309581cdfe",
+    "source_url": "https://otda.ny.gov/resources/caseload/2009/2009-07-stats.pdf",
+    "status": "parsed"
+  },
+  "2009-08": {
+    "heap_line_count": 129,
+    "report_date": "2009-08-01",
+    "report_id": "2009-08",
+    "source_file": "2009-08-stats.pdf",
+    "source_sha256": "3ead13299f679b74b81a59eab8effd0a46155e0c097c9fadebb42befec7182cf",
+    "source_url": "https://otda.ny.gov/resources/caseload/2009/2009-08-stats.pdf",
+    "status": "parsed"
+  },
+  "2009-09": {
+    "heap_line_count": 126,
+    "report_date": "2009-09-01",
+    "report_id": "2009-09",
+    "source_file": "2009-09-stats.pdf",
+    "source_sha256": "145c1867c7668c7f9ac339975e7af7108a53dec3eadf7f9539febd402efed506",
+    "source_url": "https://otda.ny.gov/resources/caseload/2009/2009-09-stats.pdf",
+    "status": "parsed"
+  },
+  "2009-10": {
+    "heap_line_count": 24,
+    "report_date": "2009-10-01",
+    "report_id": "2009-10",
+    "source_file": "2009-10-stats.pdf",
+    "source_sha256": "db32e5e25cf022914c744ce7e50d27aa211259ceb47261307370134bae5ee0db",
+    "source_url": "https://otda.ny.gov/resources/caseload/2009/2009-10-stats.pdf",
+    "status": "parsed"
+  },
+  "2009-11": {
+    "heap_line_count": 127,
+    "report_date": "2009-11-01",
+    "report_id": "2009-11",
+    "source_file": "2009-11-stats.pdf",
+    "source_sha256": "1aab1e2c9ff567a9de5fddc8b73f451204b02d5fafad4c6de042cbcc5b74023f",
+    "source_url": "https://otda.ny.gov/resources/caseload/2009/2009-11-stats.pdf",
+    "status": "parsed"
+  },
+  "2009-12": {
+    "heap_line_count": 127,
+    "report_date": "2009-12-01",
+    "report_id": "2009-12",
+    "source_file": "2009-12-stats.pdf",
+    "source_sha256": "83fb30002a986527fd0300af8ca8610add321bbb8e5ef1a12d6ebe5a4262df23",
+    "source_url": "https://otda.ny.gov/resources/caseload/2009/2009-12-stats.pdf",
+    "status": "parsed"
+  },
+  "2010-01": {
+    "heap_line_count": 126,
+    "report_date": "2010-01-01",
+    "report_id": "2010-01",
+    "source_file": "2010-01-stats.pdf",
+    "source_sha256": "5f069c7cbe04f31425c5b383c336be6e3c826f1e331417e6d14440c78fde8c1b",
+    "source_url": "https://otda.ny.gov/resources/caseload/2010/2010-01-stats.pdf",
+    "status": "parsed"
+  },
+  "2010-02": {
+    "heap_line_count": 128,
+    "report_date": "2010-02-01",
+    "report_id": "2010-02",
+    "source_file": "2010-02-stats.pdf",
+    "source_sha256": "cb355055fd5f1b0a8113e80fb86dc6de7a6e4727f4e94dfa544d11098a9a0241",
+    "source_url": "https://otda.ny.gov/resources/caseload/2010/2010-02-stats.pdf",
+    "status": "parsed"
+  },
+  "2010-03": {
+    "heap_line_count": 127,
+    "report_date": "2010-03-01",
+    "report_id": "2010-03",
+    "source_file": "2010-03-stats.pdf",
+    "source_sha256": "6e6e7f1abe8ec8f44338c8153d410a16d0cdebf19b783054bdf7441a24c35a00",
+    "source_url": "https://otda.ny.gov/resources/caseload/2010/2010-03-stats.pdf",
+    "status": "parsed"
+  },
+  "2010-04": {
+    "heap_line_count": 129,
+    "report_date": "2010-04-01",
+    "report_id": "2010-04",
+    "source_file": "2010-04-stats.pdf",
+    "source_sha256": "6ee7af6f3185f1327142dc487399e655886bb9513a3dc68acfec3ab2475bb110",
+    "source_url": "https://otda.ny.gov/resources/caseload/2010/2010-04-stats.pdf",
+    "status": "parsed"
+  },
+  "2010-05": {
+    "heap_line_count": 128,
+    "report_date": "2010-05-01",
+    "report_id": "2010-05",
+    "source_file": "2010-05-stats.pdf",
+    "source_sha256": "2d57c4d9fb199f135b5adc4fe04224a6b5f5f96ec94de95cfdca821827fa1bfb",
+    "source_url": "https://otda.ny.gov/resources/caseload/2010/2010-05-stats.pdf",
+    "status": "parsed"
+  },
+  "2010-06": {
+    "heap_line_count": 129,
+    "report_date": "2010-06-01",
+    "report_id": "2010-06",
+    "source_file": "2010-06-stats.pdf",
+    "source_sha256": "9f9e7ec195bee8399d2ffb0654cc234788f67f4fa000ce32e0d37cb15243b24c",
+    "source_url": "https://otda.ny.gov/resources/caseload/2010/2010-06-stats.pdf",
+    "status": "parsed"
+  },
+  "2010-07": {
+    "heap_line_count": 128,
+    "report_date": "2010-07-01",
+    "report_id": "2010-07",
+    "source_file": "2010-07-stats.pdf",
+    "source_sha256": "f90ba94f1f5ae239d14ac27999d67d019f5e03e8cb973c636ed93abf3187031c",
+    "source_url": "https://otda.ny.gov/resources/caseload/2010/2010-07-stats.pdf",
+    "status": "parsed"
+  },
+  "2010-08": {
+    "heap_line_count": 128,
+    "report_date": "2010-08-01",
+    "report_id": "2010-08",
+    "source_file": "2010-08-stats.pdf",
+    "source_sha256": "6bbbe7250153a8a3bdbd7399617ed43b1cfeb0c9d478583c7c2ac3f73059cb91",
+    "source_url": "https://otda.ny.gov/resources/caseload/2010/2010-08-stats.pdf",
+    "status": "parsed"
+  },
+  "2010-09": {
+    "heap_line_count": 128,
+    "report_date": "2010-09-01",
+    "report_id": "2010-09",
+    "source_file": "2010-09-stats.pdf",
+    "source_sha256": "d695b71b2bcc3f54259baf54d7d4154ae33e515a62259a87038496c1bc8cb966",
+    "source_url": "https://otda.ny.gov/resources/caseload/2010/2010-09-stats.pdf",
+    "status": "parsed"
+  },
+  "2010-10": {
+    "heap_line_count": 127,
+    "report_date": "2010-10-01",
+    "report_id": "2010-10",
+    "source_file": "2010-10-stats.pdf",
+    "source_sha256": "b91356393aa243cb8ddf6eeb52356bb0d5e71267e97ae9effb8e96e22da5f2c3",
+    "source_url": "https://otda.ny.gov/resources/caseload/2010/2010-10-stats.pdf",
+    "status": "parsed"
+  },
+  "2010-11": {
+    "heap_line_count": 128,
+    "report_date": "2010-11-01",
+    "report_id": "2010-11",
+    "source_file": "2010-11-stats.pdf",
+    "source_sha256": "df4afb245c8451fe1bc438976677c29a7421b620354c1f4caf05f2d3792e7ac8",
+    "source_url": "https://otda.ny.gov/resources/caseload/2010/2010-11-stats.pdf",
+    "status": "parsed"
+  },
+  "2010-12": {
+    "heap_line_count": 129,
+    "report_date": "2010-12-01",
+    "report_id": "2010-12",
+    "source_file": "2010-12-stats.pdf",
+    "source_sha256": "8bbb30112baafa5560c5e2cba23fe503a32ae093b32ea7c2b2c660562f52a86c",
+    "source_url": "https://otda.ny.gov/resources/caseload/2010/2010-12-stats.pdf",
+    "status": "parsed"
+  },
+  "2011-01": {
+    "heap_line_count": 128,
+    "report_date": "2011-01-01",
+    "report_id": "2011-01",
+    "source_file": "2011-01-stats.pdf",
+    "source_sha256": "78d62b2abf50c0de23ad6b04b676bd204e59351d7f7a90fbb68996b24aebdd38",
+    "source_url": "https://otda.ny.gov/resources/caseload/2011/2011-01-stats.pdf",
+    "status": "parsed"
+  },
+  "2011-02": {
+    "heap_line_count": 128,
+    "report_date": "2011-02-01",
+    "report_id": "2011-02",
+    "source_file": "2011-02-stats.pdf",
+    "source_sha256": "197dbf2ba7c646bef6efde8815666646504286af6ecacba48fe1d4ff31b3ace0",
+    "source_url": "https://otda.ny.gov/resources/caseload/2011/2011-02-stats.pdf",
+    "status": "parsed"
+  },
+  "2011-03": {
+    "heap_line_count": 129,
+    "report_date": "2011-03-01",
+    "report_id": "2011-03",
+    "source_file": "2011-03-stats.pdf",
+    "source_sha256": "005d0c76a575cbfad975cbbedeba327ac38465f80d1eac4c6aae23b06b899632",
+    "source_url": "https://otda.ny.gov/resources/caseload/2011/2011-03-stats.pdf",
+    "status": "parsed"
+  },
+  "2011-04": {
+    "heap_line_count": 128,
+    "report_date": "2011-04-01",
+    "report_id": "2011-04",
+    "source_file": "2011-04-stats.pdf",
+    "source_sha256": "a62cf754f41bb29b8f9cef7d62534bb10e7d6305d00a72ed2da9ee90527cc9ab",
+    "source_url": "https://otda.ny.gov/resources/caseload/2011/2011-04-stats.pdf",
+    "status": "parsed"
+  },
+  "2011-05": {
+    "heap_line_count": 129,
+    "report_date": "2011-05-01",
+    "report_id": "2011-05",
+    "source_file": "2011-05-stats.pdf",
+    "source_sha256": "0d4197dc5004836c87f3943fcb4c0cd00463e1086b60aeadaaa0cc52c33de331",
+    "source_url": "https://otda.ny.gov/resources/caseload/2011/2011-05-stats.pdf",
+    "status": "parsed"
+  },
+  "2011-06": {
+    "heap_line_count": 128,
+    "report_date": "2011-06-01",
+    "report_id": "2011-06",
+    "source_file": "2011-06-stats.pdf",
+    "source_sha256": "63d30ba9626173978520ad494ccacebdd65f3cbe5e557e7060ff12f858070f30",
+    "source_url": "https://otda.ny.gov/resources/caseload/2011/2011-06-stats.pdf",
+    "status": "parsed"
+  },
+  "2011-07": {
+    "heap_line_count": 128,
+    "report_date": "2011-07-01",
+    "report_id": "2011-07",
+    "source_file": "2011-07-stats.pdf",
+    "source_sha256": "35c730dce9c3724474d6729624b90228fea338e22fdac0925f59c45ce2287113",
+    "source_url": "https://otda.ny.gov/resources/caseload/2011/2011-07-stats.pdf",
+    "status": "parsed"
+  },
+  "2011-08": {
+    "heap_line_count": 19,
+    "report_date": "2011-08-01",
+    "report_id": "2011-08",
+    "source_file": "2011-08-stats.pdf",
+    "source_sha256": "ca3a4ff6af8ea42a9f0259a5226e5978a25c94f01c4f58c9cb777fcb920f1519",
+    "source_url": "https://otda.ny.gov/resources/caseload/2011/2011-08-stats.pdf",
+    "status": "parsed"
+  },
+  "2011-09": {
+    "heap_line_count": 21,
+    "report_date": "2011-09-01",
+    "report_id": "2011-09",
+    "source_file": "2011-09-stats.pdf",
+    "source_sha256": "a4b714b06c1c187dd3afd43aad9a4ad1a3aa80e96a74cc32516a3a106acc1f68",
+    "source_url": "https://otda.ny.gov/resources/caseload/2011/2011-09-stats.pdf",
+    "status": "parsed"
+  },
+  "2011-10": {
+    "heap_line_count": 22,
+    "report_date": "2011-10-01",
+    "report_id": "2011-10",
+    "source_file": "2011-10-stats.pdf",
+    "source_sha256": "47e51233a61d26791ad4f449cea5a695c7da54ce340ba47486636c75373ab18a",
+    "source_url": "https://otda.ny.gov/resources/caseload/2011/2011-10-stats.pdf",
+    "status": "parsed"
+  },
+  "2011-11": {
+    "heap_line_count": 22,
+    "report_date": "2011-11-01",
+    "report_id": "2011-11",
+    "source_file": "2011-11-stats.pdf",
+    "source_sha256": "0e6b05ae5db9689ec89d2e6d3dde6a9ad12653ea6a60468466a6529038597e3d",
+    "source_url": "https://otda.ny.gov/resources/caseload/2011/2011-11-stats.pdf",
+    "status": "parsed"
+  },
+  "2011-12": {
+    "heap_line_count": 23,
+    "report_date": "2011-12-01",
+    "report_id": "2011-12",
+    "source_file": "2011-12-stats.pdf",
+    "source_sha256": "e3065f2d0b3866da84e9b63fbeb74a83b49c7d2fba192fdaf5a067b9d416b3fe",
+    "source_url": "https://otda.ny.gov/resources/caseload/2011/2011-12-stats.pdf",
+    "status": "parsed"
+  },
+  "2012-01": {
+    "heap_line_count": 18,
+    "report_date": "2012-01-01",
+    "report_id": "2012-01",
+    "source_file": "2012-01-stats.pdf",
+    "source_sha256": "53c4e3f11c48274f022258bc3c20ee98d50f5792ba1ecb6b20e836d2155c7802",
+    "source_url": "https://otda.ny.gov/resources/caseload/2012/2012-01-stats.pdf",
+    "status": "parsed"
+  },
+  "2012-02": {
+    "heap_line_count": 22,
+    "report_date": "2012-02-01",
+    "report_id": "2012-02",
+    "source_file": "2012-02-stats.pdf",
+    "source_sha256": "2f62ff14a5afd9ca198e5de49f0f367c6eff39ae7c7c0cb2ec8838538146b9ce",
+    "source_url": "https://otda.ny.gov/resources/caseload/2012/2012-02-stats.pdf",
+    "status": "parsed"
+  },
+  "2012-03": {
+    "heap_line_count": 22,
+    "report_date": "2012-03-01",
+    "report_id": "2012-03",
+    "source_file": "2012-03-stats.pdf",
+    "source_sha256": "d2527217db92578429d9c25e491e4810841455bb84d8250d5721f7bf010bbded",
+    "source_url": "https://otda.ny.gov/resources/caseload/2012/2012-03-stats.pdf",
+    "status": "parsed"
+  },
+  "2012-04": {
+    "heap_line_count": 18,
+    "report_date": "2012-04-01",
+    "report_id": "2012-04",
+    "source_file": "2012-04-stats.pdf",
+    "source_sha256": "d1a283be3cd2e7319b66f90b071f5343045b544a0ea4439cdbd6897a6963a6ff",
+    "source_url": "https://otda.ny.gov/resources/caseload/2012/2012-04-stats.pdf",
+    "status": "parsed"
+  },
+  "2012-05": {
+    "heap_line_count": 18,
+    "report_date": "2012-05-01",
+    "report_id": "2012-05",
+    "source_file": "2012-05-stats.pdf",
+    "source_sha256": "be37033b77be34efe9116d9dde9a1aa6ae3aaf675889bc9c9cc271bd09e7b1ea",
+    "source_url": "https://otda.ny.gov/resources/caseload/2012/2012-05-stats.pdf",
+    "status": "parsed"
+  },
+  "2012-06": {
+    "heap_line_count": 18,
+    "report_date": "2012-06-01",
+    "report_id": "2012-06",
+    "source_file": "2012-06-stats.pdf",
+    "source_sha256": "0108283d55b47420f7aee316bf12874dbccccac18a52ed2ea6880285a0d22727",
+    "source_url": "https://otda.ny.gov/resources/caseload/2012/2012-06-stats.pdf",
+    "status": "parsed"
+  },
+  "2012-07": {
+    "heap_line_count": 18,
+    "report_date": "2012-07-01",
+    "report_id": "2012-07",
+    "source_file": "2012-07-stats.pdf",
+    "source_sha256": "68c557c47b3bc5f10d2d081cd7308e8dccbcd44932b7be0687a40574b8d4ad2a",
+    "source_url": "https://otda.ny.gov/resources/caseload/2012/2012-07-stats.pdf",
+    "status": "parsed"
+  },
+  "2012-08": {
+    "heap_line_count": 18,
+    "report_date": "2012-08-01",
+    "report_id": "2012-08",
+    "source_file": "2012-08-stats.pdf",
+    "source_sha256": "ebdd1a242bd24cda7854804a1aa1b79d551638799b3ef1f8cd4100ba41c64a39",
+    "source_url": "https://otda.ny.gov/resources/caseload/2012/2012-08-stats.pdf",
+    "status": "parsed"
+  },
+  "2012-09": {
+    "heap_line_count": 18,
+    "report_date": "2012-09-01",
+    "report_id": "2012-09",
+    "source_file": "2012-09-stats.pdf",
+    "source_sha256": "3e288bd0813e598bcdf5676f63e793fb6afc0ddd44097424552e53b6035e734d",
+    "source_url": "https://otda.ny.gov/resources/caseload/2012/2012-09-stats.pdf",
+    "status": "parsed"
+  },
+  "2012-10": {
+    "heap_line_count": 18,
+    "report_date": "2012-10-01",
+    "report_id": "2012-10",
+    "source_file": "2012-10-stats.pdf",
+    "source_sha256": "4a985f4e0699c273c82a19faf7d47ec9fc27669966918ea636f7cbb18fca9d3b",
+    "source_url": "https://otda.ny.gov/resources/caseload/2012/2012-10-stats.pdf",
+    "status": "parsed"
+  },
+  "2012-11": {
+    "heap_line_count": 18,
+    "report_date": "2012-11-01",
+    "report_id": "2012-11",
+    "source_file": "2012-11-stats.pdf",
+    "source_sha256": "e2c6b032dc2fde56681351d145ae9050ae6c801e4c765c58d396bb9b28d559bb",
+    "source_url": "https://otda.ny.gov/resources/caseload/2012/2012-11-stats.pdf",
+    "status": "parsed"
+  },
+  "2012-12": {
+    "heap_line_count": 19,
+    "report_date": "2012-12-01",
+    "report_id": "2012-12",
+    "source_file": "2012-12-stats.pdf",
+    "source_sha256": "5c315cf056f16fc9055eca95b9a67b71e0f00868239dd8d763092c48be5d2d54",
+    "source_url": "https://otda.ny.gov/resources/caseload/2012/2012-12-stats.pdf",
+    "status": "parsed"
+  },
+  "2013-01": {
+    "heap_line_count": 25,
+    "report_date": "2013-01-01",
+    "report_id": "2013-01",
+    "source_file": "2013-01-stats.pdf",
+    "source_sha256": "7742bc19cdc0fb93f3d7391c4f172d49b7e82755ab107aa0508d2f2611357119",
+    "source_url": "https://otda.ny.gov/resources/caseload/2013/2013-01-stats.pdf",
+    "status": "parsed"
+  },
+  "2013-02": {
+    "heap_line_count": 21,
+    "report_date": "2013-02-01",
+    "report_id": "2013-02",
+    "source_file": "2013-02-stats.pdf",
+    "source_sha256": "9ff9180a299a0d94418cf198836167bd9b3ff28fd691a3a8c14187aa058575c0",
+    "source_url": "https://otda.ny.gov/resources/caseload/2013/2013-02-stats.pdf",
+    "status": "parsed"
+  },
+  "2013-03": {
+    "heap_line_count": 21,
+    "report_date": "2013-03-01",
+    "report_id": "2013-03",
+    "source_file": "2013-03-stats.pdf",
+    "source_sha256": "e3c446caaae5c9cbc77192fd771ec2fd71daf73891494b66043ff3e6df47c4d3",
+    "source_url": "https://otda.ny.gov/resources/caseload/2013/2013-03-stats.pdf",
+    "status": "parsed"
+  },
+  "2013-04": {
+    "heap_line_count": 21,
+    "report_date": "2013-04-01",
+    "report_id": "2013-04",
+    "source_file": "2013-04-stats.pdf",
+    "source_sha256": "60e84995731141c03ff55447e457e3ca800c0be35b75103acd89a93315f2e3b2",
+    "source_url": "https://otda.ny.gov/resources/caseload/2013/2013-04-stats.pdf",
+    "status": "parsed"
+  },
+  "2013-05": {
+    "heap_line_count": 21,
+    "report_date": "2013-05-01",
+    "report_id": "2013-05",
+    "source_file": "2013-05-stats.pdf",
+    "source_sha256": "c2ec0efdab6319bbbe73f51b39ab12815893a68933820757b24c4fb4b6bc72fe",
+    "source_url": "https://otda.ny.gov/resources/caseload/2013/2013-05-stats.pdf",
+    "status": "parsed"
+  },
+  "2013-06": {
+    "heap_line_count": 21,
+    "report_date": "2013-06-01",
+    "report_id": "2013-06",
+    "source_file": "2013-06-stats.pdf",
+    "source_sha256": "1b2579d40aa1be06fe1188999371246a453a4f7d8c519943e705a8fc46b52506",
+    "source_url": "https://otda.ny.gov/resources/caseload/2013/2013-06-stats.pdf",
+    "status": "parsed"
+  },
+  "2013-07": {
+    "heap_line_count": 22,
+    "report_date": "2013-07-01",
+    "report_id": "2013-07",
+    "source_file": "2013-07-stats.pdf",
+    "source_sha256": "c7ae5a6f9f8ac644ac3a02aea028aef8564d5e467741e07fc028955f1a576b78",
+    "source_url": "https://otda.ny.gov/resources/caseload/2013/2013-07-stats.pdf",
+    "status": "parsed"
+  },
+  "2013-08": {
+    "heap_line_count": 21,
+    "report_date": "2013-08-01",
+    "report_id": "2013-08",
+    "source_file": "2013-08-stats.pdf",
+    "source_sha256": "7999ccbdec40365921f895e1691d234b674ae048e5d03954705c2ae93eb36b2f",
+    "source_url": "https://otda.ny.gov/resources/caseload/2013/2013-08-stats.pdf",
+    "status": "parsed"
+  },
+  "2013-09": {
+    "heap_line_count": 21,
+    "report_date": "2013-09-01",
+    "report_id": "2013-09",
+    "source_file": "2013-09-stats.pdf",
+    "source_sha256": "3c14360d4cfeda3f2c6067ad03e24830a4c98f93111185c90a5e82c3ee6762e6",
+    "source_url": "https://otda.ny.gov/resources/caseload/2013/2013-09-stats.pdf",
+    "status": "parsed"
+  },
+  "2013-10": {
+    "heap_line_count": 21,
+    "report_date": "2013-10-01",
+    "report_id": "2013-10",
+    "source_file": "2013-10-stats.pdf",
+    "source_sha256": "f88936dfb29082729818a36292558e6423e8a82b3b57f4491704cc10b0cefac3",
+    "source_url": "https://otda.ny.gov/resources/caseload/2013/2013-10-stats.pdf",
+    "status": "parsed"
+  },
+  "2013-11": {
+    "heap_line_count": 21,
+    "report_date": "2013-11-01",
+    "report_id": "2013-11",
+    "source_file": "2013-11-stats.pdf",
+    "source_sha256": "f309351bb16487017e73c2899ef7c1ebe26c5479d249049eaa95d16765a54ada",
+    "source_url": "https://otda.ny.gov/resources/caseload/2013/2013-11-stats.pdf",
+    "status": "parsed"
+  },
+  "2013-12": {
+    "heap_line_count": 21,
+    "report_date": "2013-12-01",
+    "report_id": "2013-12",
+    "source_file": "2013-12-stats.pdf",
+    "source_sha256": "6511976a094ea07f8ea0fba31aa13b20c43b2e6af923199bbf06e6d80121c911",
+    "source_url": "https://otda.ny.gov/resources/caseload/2013/2013-12-stats.pdf",
+    "status": "parsed"
+  },
+  "2014-01": {
+    "heap_line_count": 21,
+    "report_date": "2014-01-01",
+    "report_id": "2014-01",
+    "source_file": "2014-01-stats.pdf",
+    "source_sha256": "870bcddcb266e762bc51837db6a9abf2034d790002489b6b9e2f352b4b17a562",
+    "source_url": "https://otda.ny.gov/resources/caseload/2014/2014-01-stats.pdf",
+    "status": "parsed"
+  },
+  "2014-02": {
+    "heap_line_count": 21,
+    "report_date": "2014-02-01",
+    "report_id": "2014-02",
+    "source_file": "2014-02-stats.pdf",
+    "source_sha256": "f91fba672121ef36a3fe4cac4bb777be278822929f1734575b55f0e7d1cb0fef",
+    "source_url": "https://otda.ny.gov/resources/caseload/2014/2014-02-stats.pdf",
+    "status": "parsed"
+  },
+  "2014-03": {
+    "heap_line_count": 21,
+    "report_date": "2014-03-01",
+    "report_id": "2014-03",
+    "source_file": "2014-03-stats.pdf",
+    "source_sha256": "09378b833f5a98745fb6f840f681fe263c5eb829ce8256819a15e86656b34564",
+    "source_url": "https://otda.ny.gov/resources/caseload/2014/2014-03-stats.pdf",
+    "status": "parsed"
+  },
+  "2014-04": {
+    "heap_line_count": 21,
+    "report_date": "2014-04-01",
+    "report_id": "2014-04",
+    "source_file": "2014-04-stats.pdf",
+    "source_sha256": "2c82e1c492e74c5bcde2047e4b83abf8708853bb48722316f856bd584ef33854",
+    "source_url": "https://otda.ny.gov/resources/caseload/2014/2014-04-stats.pdf",
+    "status": "parsed"
+  },
+  "2014-05": {
+    "heap_line_count": 25,
+    "report_date": "2014-05-01",
+    "report_id": "2014-05",
+    "source_file": "2014-05-stats.pdf",
+    "source_sha256": "ac47f6cea020c3fe4c98c2a87d1836b676de31dd35d4f0893ddc8d1f2fc43e5b",
+    "source_url": "https://otda.ny.gov/resources/caseload/2014/2014-05-stats.pdf",
+    "status": "parsed"
+  },
+  "2014-06": {
+    "heap_line_count": 25,
+    "report_date": "2014-06-01",
+    "report_id": "2014-06",
+    "source_file": "2014-06-stats.pdf",
+    "source_sha256": "f1fd5657d1eaa9f590547aa51fb3196c7a32c6e381f52747716a1a66898f5858",
+    "source_url": "https://otda.ny.gov/resources/caseload/2014/2014-06-stats.pdf",
+    "status": "parsed"
+  },
+  "2014-07": {
+    "heap_line_count": 25,
+    "report_date": "2014-07-01",
+    "report_id": "2014-07",
+    "source_file": "2014-07-stats.pdf",
+    "source_sha256": "49da63c55d7d66707d51e125148bcc53c242674c1a3d34fe4c5211457dc5dd94",
+    "source_url": "https://otda.ny.gov/resources/caseload/2014/2014-07-stats.pdf",
+    "status": "parsed"
+  },
+  "2014-08": {
+    "heap_line_count": 25,
+    "report_date": "2014-08-01",
+    "report_id": "2014-08",
+    "source_file": "2014-08-stats.pdf",
+    "source_sha256": "a3deaf8a6ff43da72a62d6991493d3dfff44a435119df3f28221dd58e49a9ab1",
+    "source_url": "https://otda.ny.gov/resources/caseload/2014/2014-08-stats.pdf",
+    "status": "parsed"
+  },
+  "2014-09": {
+    "heap_line_count": 25,
+    "report_date": "2014-09-01",
+    "report_id": "2014-09",
+    "source_file": "2014-09-stats.pdf",
+    "source_sha256": "31f05eec3a5af25fb53f1afb8c6bab9b3dbaa9a7dd5a0bdf4ab04ba65c50697c",
+    "source_url": "https://otda.ny.gov/resources/caseload/2014/2014-09-stats.pdf",
+    "status": "parsed"
+  },
+  "2014-10": {
+    "heap_line_count": 37,
+    "report_date": "2014-10-01",
+    "report_id": "2014-10",
+    "source_file": "2014-10-stats.pdf",
+    "source_sha256": "83588e19adb7e67ffdf4360a6c6ec4bb7d1a734d64efe78aea5506d95a00d1d4",
+    "source_url": "https://otda.ny.gov/resources/caseload/2014/2014-10-stats.pdf",
+    "status": "parsed"
+  },
+  "2014-11": {
+    "heap_line_count": 37,
+    "report_date": "2014-11-01",
+    "report_id": "2014-11",
+    "source_file": "2014-11-stats.pdf",
+    "source_sha256": "f4d54566c8ca4eeb03fe1956e2b6c5ecf490d9beeb6ed015bd4e9f570b91c7f1",
+    "source_url": "https://otda.ny.gov/resources/caseload/2014/2014-11-stats.pdf",
+    "status": "parsed"
+  },
+  "2014-12": {
+    "heap_line_count": 37,
+    "report_date": "2014-12-01",
+    "report_id": "2014-12",
+    "source_file": "2014-12-stats.pdf",
+    "source_sha256": "2231c9456113df12fa77c8cef2a46e0828bc7228dcdf7cbad36abcbca65601de",
+    "source_url": "https://otda.ny.gov/resources/caseload/2014/2014-12-stats.pdf",
+    "status": "parsed"
+  },
+  "2015-01": {
+    "heap_line_count": 37,
+    "report_date": "2015-01-01",
+    "report_id": "2015-01",
+    "source_file": "2015-01-stats.pdf",
+    "source_sha256": "b892e92dd4276384eada5279f39490701d306d47f7e72f27f14e0996ede0d5e7",
+    "source_url": "https://otda.ny.gov/resources/caseload/2015/2015-01-stats.pdf",
+    "status": "parsed"
+  },
+  "2015-02": {
+    "heap_line_count": 37,
+    "report_date": "2015-02-01",
+    "report_id": "2015-02",
+    "source_file": "2015-02-stats.pdf",
+    "source_sha256": "3d098b1819a83702f36f57142ce052d3ea6b6dba21486049df1624a9484b7e43",
+    "source_url": "https://otda.ny.gov/resources/caseload/2015/2015-02-stats.pdf",
+    "status": "parsed"
+  },
+  "2015-03": {
+    "heap_line_count": 37,
+    "report_date": "2015-03-01",
+    "report_id": "2015-03",
+    "source_file": "2015-03-stats.pdf",
+    "source_sha256": "3f314caca39626588130dcac68486fdc30e3dc200dbd834cc969a24cec83fa4c",
+    "source_url": "https://otda.ny.gov/resources/caseload/2015/2015-03-stats.pdf",
+    "status": "parsed"
+  },
+  "2015-04": {
+    "heap_line_count": 37,
+    "report_date": "2015-04-01",
+    "report_id": "2015-04",
+    "source_file": "2015-04-stats.pdf",
+    "source_sha256": "f171dd2e2caaf7dde222e76b925ffabe8187c70675858e5e6c515821f1f72a44",
+    "source_url": "https://otda.ny.gov/resources/caseload/2015/2015-04-stats.pdf",
+    "status": "parsed"
+  },
+  "2015-05": {
+    "heap_line_count": 37,
+    "report_date": "2015-05-01",
+    "report_id": "2015-05",
+    "source_file": "2015-05-stats.pdf",
+    "source_sha256": "8e5cd065713b863b67ce21a0f707f5e76a4b679206576463596e80e1c771ac4e",
+    "source_url": "https://otda.ny.gov/resources/caseload/2015/2015-05-stats.pdf",
+    "status": "parsed"
+  },
+  "2015-06": {
+    "heap_line_count": 37,
+    "report_date": "2015-06-01",
+    "report_id": "2015-06",
+    "source_file": "2015-06-stats.pdf",
+    "source_sha256": "bedf723a54a0507fd0f2e82c468cecc88ad252f8e342bc6e67f7968906b54cfd",
+    "source_url": "https://otda.ny.gov/resources/caseload/2015/2015-06-stats.pdf",
+    "status": "parsed"
+  },
+  "2015-07": {
+    "heap_line_count": 37,
+    "report_date": "2015-07-01",
+    "report_id": "2015-07",
+    "source_file": "2015-07-stats.pdf",
+    "source_sha256": "d75e90e8a2a66d24ce2b35c1bf94f98716018bc1e3fd1a7a97556453ea9585d7",
+    "source_url": "https://otda.ny.gov/resources/caseload/2015/2015-07-stats.pdf",
+    "status": "parsed"
+  },
+  "2015-08": {
+    "heap_line_count": 37,
+    "report_date": "2015-08-01",
+    "report_id": "2015-08",
+    "source_file": "2015-08-stats.pdf",
+    "source_sha256": "90589ff840cd419cf5ea44c0090b26b76901446498f8fde1d8cefbe7de000d15",
+    "source_url": "https://otda.ny.gov/resources/caseload/2015/2015-08-stats.pdf",
+    "status": "parsed"
+  },
+  "2015-09": {
+    "heap_line_count": 37,
+    "report_date": "2015-09-01",
+    "report_id": "2015-09",
+    "source_file": "2015-09-stats.pdf",
+    "source_sha256": "5688caf66e8bf7ec30b3a566c7e88f0ebc436c89c76453418f32f2ee0b932947",
+    "source_url": "https://otda.ny.gov/resources/caseload/2015/2015-09-stats.pdf",
+    "status": "parsed"
+  },
+  "2015-10": {
+    "heap_line_count": 37,
+    "report_date": "2015-10-01",
+    "report_id": "2015-10",
+    "source_file": "2015-10-stats.pdf",
+    "source_sha256": "245900fc85fa5b6ec7a83c9863aa0bbb2d8410554b3199d34c2d753e72ebf336",
+    "source_url": "https://otda.ny.gov/resources/caseload/2015/2015-10-stats.pdf",
+    "status": "parsed"
+  },
+  "2015-11": {
+    "heap_line_count": 37,
+    "report_date": "2015-11-01",
+    "report_id": "2015-11",
+    "source_file": "2015-11-stats.pdf",
+    "source_sha256": "387c71e03fa568997a7b5c6cc6185e8dceafe0a43a3337a0c05dd6996bcc3c64",
+    "source_url": "https://otda.ny.gov/resources/caseload/2015/2015-11-stats.pdf",
+    "status": "parsed"
+  },
+  "2015-12": {
+    "heap_line_count": 37,
+    "report_date": "2015-12-01",
+    "report_id": "2015-12",
+    "source_file": "2015-12-stats.pdf",
+    "source_sha256": "e39e2e95fecb623975e2404e7052a21ec8b1af0c0e09eca3a5eb310a73bc22c9",
+    "source_url": "https://otda.ny.gov/resources/caseload/2015/2015-12-stats.pdf",
+    "status": "parsed"
+  },
+  "2016-01": {
+    "heap_line_count": 37,
+    "report_date": "2016-01-01",
+    "report_id": "2016-01",
+    "source_file": "2016-01-stats.pdf",
+    "source_sha256": "9d40bfc49157996f4956032433ba23d97c7f2dd5e58b5280c6aec71f7c68a58b",
+    "source_url": "https://otda.ny.gov/resources/caseload/2016/2016-01-stats.pdf",
+    "status": "parsed"
+  },
+  "2016-02": {
+    "heap_line_count": 37,
+    "report_date": "2016-02-01",
+    "report_id": "2016-02",
+    "source_file": "2016-02-stats.pdf",
+    "source_sha256": "3045c80883124e1e75f7675a7e0e1a221f7b31a34fac1f3e5a9a959ac198eb3d",
+    "source_url": "https://otda.ny.gov/resources/caseload/2016/2016-02-stats.pdf",
+    "status": "parsed"
+  },
+  "2016-03": {
+    "heap_line_count": 37,
+    "report_date": "2016-03-01",
+    "report_id": "2016-03",
+    "source_file": "2016-03-stats.pdf",
+    "source_sha256": "c0298c223c815d87338fc2509e5f88212a44825f9142b8a7238a018647c87232",
+    "source_url": "https://otda.ny.gov/resources/caseload/2016/2016-03-stats.pdf",
+    "status": "parsed"
+  },
+  "2016-04": {
+    "heap_line_count": 37,
+    "report_date": "2016-04-01",
+    "report_id": "2016-04",
+    "source_file": "2016-04-stats.pdf",
+    "source_sha256": "b844178f7c0e4d08759b5cddedd33870d6323fb70c8839202d40a118db73aed7",
+    "source_url": "https://otda.ny.gov/resources/caseload/2016/2016-04-stats.pdf",
+    "status": "parsed"
+  },
+  "2016-05": {
+    "heap_line_count": 37,
+    "report_date": "2016-05-01",
+    "report_id": "2016-05",
+    "source_file": "2016-05-stats.pdf",
+    "source_sha256": "a72f0fdcbd854efd3a38f741b71a1cf3c76dec441b48075873a8436e0460992f",
+    "source_url": "https://otda.ny.gov/resources/caseload/2016/2016-05-stats.pdf",
+    "status": "parsed"
+  },
+  "2016-06": {
+    "heap_line_count": 37,
+    "report_date": "2016-06-01",
+    "report_id": "2016-06",
+    "source_file": "2016-06-stats.pdf",
+    "source_sha256": "5d0ed297a2e95b38ae3d9869ecb60a915c828eae9a45d4eb41554dceb3807bf6",
+    "source_url": "https://otda.ny.gov/resources/caseload/2016/2016-06-stats.pdf",
+    "status": "parsed"
+  },
+  "2016-07": {
+    "heap_line_count": 37,
+    "report_date": "2016-07-01",
+    "report_id": "2016-07",
+    "source_file": "2016-07-stats.pdf",
+    "source_sha256": "24cc19611d698e5c43e9aea201de12e13cc3870119a4988265fd54ef8c00cfa2",
+    "source_url": "https://otda.ny.gov/resources/caseload/2016/2016-07-stats.pdf",
+    "status": "parsed"
+  },
+  "2016-08": {
+    "heap_line_count": 37,
+    "report_date": "2016-08-01",
+    "report_id": "2016-08",
+    "source_file": "2016-08-stats.pdf",
+    "source_sha256": "407ac1856aabe89a1a529a8a656b409c5b5a3a96c672f99f3e5f007a255cd94c",
+    "source_url": "https://otda.ny.gov/resources/caseload/2016/2016-08-stats.pdf",
+    "status": "parsed"
+  },
+  "2016-09": {
+    "heap_line_count": 37,
+    "report_date": "2016-09-01",
+    "report_id": "2016-09",
+    "source_file": "2016-09-stats.pdf",
+    "source_sha256": "a3fdb6f8887c9d60e7c3cda6d5701c69f5c35bd334e0f2ca1e2c501caef35111",
+    "source_url": "https://otda.ny.gov/resources/caseload/2016/2016-09-stats.pdf",
+    "status": "parsed"
+  },
+  "2016-10": {
+    "heap_line_count": 37,
+    "report_date": "2016-10-01",
+    "report_id": "2016-10",
+    "source_file": "2016-10-stats.pdf",
+    "source_sha256": "a7f90a59ae810d2490f40df68a5d44797d31609ca7e9d1ca8d903ae84c4fdcd4",
+    "source_url": "https://otda.ny.gov/resources/caseload/2016/2016-10-stats.pdf",
+    "status": "parsed"
+  },
+  "2016-11": {
+    "heap_line_count": 37,
+    "report_date": "2016-11-01",
+    "report_id": "2016-11",
+    "source_file": "2016-11-stats.pdf",
+    "source_sha256": "4a7c39b27289893114473b04ab44d4f349295b83b610c64762ef85b7f6816bbc",
+    "source_url": "https://otda.ny.gov/resources/caseload/2016/2016-11-stats.pdf",
+    "status": "parsed"
+  },
+  "2016-12": {
+    "heap_line_count": 25,
+    "report_date": "2016-12-01",
+    "report_id": "2016-12",
+    "source_file": "2016-12-stats.pdf",
+    "source_sha256": "6284c96e72cc4a5e3556c169059a30bd2fa49012a2111519de9bb62d8e885a06",
+    "source_url": "https://otda.ny.gov/resources/caseload/2016/2016-12-stats.pdf",
+    "status": "parsed"
+  },
+  "2017-01": {
+    "heap_line_count": 37,
+    "report_date": "2017-01-01",
+    "report_id": "2017-01",
+    "source_file": "2017-01-stats.pdf",
+    "source_sha256": "b955ed9c44138ca46eacdabded0b26cbdce32f6b801c0a6cf1278e94c5a3a41c",
+    "source_url": "https://otda.ny.gov/resources/caseload/2017/2017-01-stats.pdf",
+    "status": "parsed"
+  },
+  "2017-02": {
+    "heap_line_count": 37,
+    "report_date": "2017-02-01",
+    "report_id": "2017-02",
+    "source_file": "2017-02-stats.pdf",
+    "source_sha256": "3f4f4acb3079023c1cfc06d4d15b40ddc782c4634e9ea737663cfac6764512cd",
+    "source_url": "https://otda.ny.gov/resources/caseload/2017/2017-02-stats.pdf",
+    "status": "parsed"
+  },
+  "2017-03": {
+    "heap_line_count": 37,
+    "report_date": "2017-03-01",
+    "report_id": "2017-03",
+    "source_file": "2017-03-stats.pdf",
+    "source_sha256": "549b59a66e70bef8463a151dc0e5e984613dbb8349f5ee248d852f186a7e8359",
+    "source_url": "https://otda.ny.gov/resources/caseload/2017/2017-03-stats.pdf",
+    "status": "parsed"
+  },
+  "2017-04": {
+    "heap_line_count": 37,
+    "report_date": "2017-04-01",
+    "report_id": "2017-04",
+    "source_file": "2017-04-stats.pdf",
+    "source_sha256": "a10a949d7c90ff3386d27d69e8ac701425ea1b3576fc78d7201cc437d60632af",
+    "source_url": "https://otda.ny.gov/resources/caseload/2017/2017-04-stats.pdf",
+    "status": "parsed"
+  },
+  "2017-05": {
+    "heap_line_count": 37,
+    "report_date": "2017-05-01",
+    "report_id": "2017-05",
+    "source_file": "2017-05-stats.pdf",
+    "source_sha256": "268101398569ee39207b232a1a3381acd3035dcccd0279c4693d25609cab59db",
+    "source_url": "https://otda.ny.gov/resources/caseload/2017/2017-05-stats.pdf",
+    "status": "parsed"
+  },
+  "2017-06": {
+    "heap_line_count": 37,
+    "report_date": "2017-06-01",
+    "report_id": "2017-06",
+    "source_file": "2017-06-stats.pdf",
+    "source_sha256": "110e3e5f79b4da43998c590a09f6c8c400207b34c2087256bde8a3445d0d4dfe",
+    "source_url": "https://otda.ny.gov/resources/caseload/2017/2017-06-stats.pdf",
+    "status": "parsed"
+  },
+  "2017-07": {
+    "heap_line_count": 37,
+    "report_date": "2017-07-01",
+    "report_id": "2017-07",
+    "source_file": "2017-07-stats.pdf",
+    "source_sha256": "e1fd3a0acc9d4529e2c9d6ce5bce71c6a321a971661d7d12f07678a0cd3cb2ec",
+    "source_url": "https://otda.ny.gov/resources/caseload/2017/2017-07-stats.pdf",
+    "status": "parsed"
+  },
+  "2017-08": {
+    "heap_line_count": 37,
+    "report_date": "2017-08-01",
+    "report_id": "2017-08",
+    "source_file": "2017-08-stats.pdf",
+    "source_sha256": "1974e4f48327adc47d73db38d57bcf32d07c0dfdf667fc88e49826bd0e1a69c5",
+    "source_url": "https://otda.ny.gov/resources/caseload/2017/2017-08-stats.pdf",
+    "status": "parsed"
+  },
+  "2017-09": {
+    "heap_line_count": 37,
+    "report_date": "2017-09-01",
+    "report_id": "2017-09",
+    "source_file": "2017-09-stats.pdf",
+    "source_sha256": "c8fe1e849b39ad5d70c8075d811ca2ea8ebdb819a0f65e132f6fad47564ae565",
+    "source_url": "https://otda.ny.gov/resources/caseload/2017/2017-09-stats.pdf",
+    "status": "parsed"
+  },
+  "2017-10": {
+    "heap_line_count": 40,
+    "report_date": "2017-10-01",
+    "report_id": "2017-10",
+    "source_file": "2017-10-stats.pdf",
+    "source_sha256": "dffd03844a8c150f8984d6032d5d37a6b9151e13feef79dc8f4c396c7c212c6f",
+    "source_url": "https://otda.ny.gov/resources/caseload/2017/2017-10-stats.pdf",
+    "status": "parsed"
+  },
+  "2017-11": {
+    "heap_line_count": 37,
+    "report_date": "2017-11-01",
+    "report_id": "2017-11",
+    "source_file": "2017-11-stats.pdf",
+    "source_sha256": "4521be44b608ccf34f74b28bcd5da91760921bdbbc34c9cd4568ecf17aa4b377",
+    "source_url": "https://otda.ny.gov/resources/caseload/2017/2017-11-stats.pdf",
+    "status": "parsed"
+  },
+  "2017-12": {
+    "heap_line_count": 37,
+    "report_date": "2017-12-01",
+    "report_id": "2017-12",
+    "source_file": "2017-12-stats.pdf",
+    "source_sha256": "dd32608b0c2ec93fcd9dcfa632c8a8ce1a190d2ad3d9c09486b7dfec64f5239e",
+    "source_url": "https://otda.ny.gov/resources/caseload/2017/2017-12-stats.pdf",
+    "status": "parsed"
+  },
+  "2018-01": {
+    "heap_line_count": 37,
+    "report_date": "2018-01-01",
+    "report_id": "2018-01",
+    "source_file": "2018-01-stats.pdf",
+    "source_sha256": "bce1aba67fd0742625a2c219ded164178faf52ee3f330c06d558a74a1b619347",
+    "source_url": "https://otda.ny.gov/resources/caseload/2018/2018-01-stats.pdf",
+    "status": "parsed"
+  },
+  "2018-02": {
+    "heap_line_count": 37,
+    "report_date": "2018-02-01",
+    "report_id": "2018-02",
+    "source_file": "2018-02-stats.pdf",
+    "source_sha256": "a23492d23b9a89cc2a0916917eebda245fc311b860a447909cdb81f591b60eea",
+    "source_url": "https://otda.ny.gov/resources/caseload/2018/2018-02-stats.pdf",
+    "status": "parsed"
+  },
+  "2018-03": {
+    "heap_line_count": 37,
+    "report_date": "2018-03-01",
+    "report_id": "2018-03",
+    "source_file": "2018-03-stats.pdf",
+    "source_sha256": "d62aceb25207efa081911d19d24535dbaba99c7d25ddad4d07c66313466f8334",
+    "source_url": "https://otda.ny.gov/resources/caseload/2018/2018-03-stats.pdf",
+    "status": "parsed"
+  },
+  "2018-04": {
+    "heap_line_count": 37,
+    "report_date": "2018-04-01",
+    "report_id": "2018-04",
+    "source_file": "2018-04-stats.pdf",
+    "source_sha256": "31026a812b95bf3a856a86735bfc7555f1cae20c661ce642814d97d7ddf5f97c",
+    "source_url": "https://otda.ny.gov/resources/caseload/2018/2018-04-stats.pdf",
+    "status": "parsed"
+  },
+  "2018-05": {
+    "heap_line_count": 37,
+    "report_date": "2018-05-01",
+    "report_id": "2018-05",
+    "source_file": "2018-05-stats.pdf",
+    "source_sha256": "597b1bfdf2dc6bbe57ed77521b58bc97fcdb8f20c09f68187c4f36ef9345799b",
+    "source_url": "https://otda.ny.gov/resources/caseload/2018/2018-05-stats.pdf",
+    "status": "parsed"
+  },
+  "2018-06": {
+    "heap_line_count": 37,
+    "report_date": "2018-06-01",
+    "report_id": "2018-06",
+    "source_file": "2018-06-stats.pdf",
+    "source_sha256": "6d5da04aee3e647a5472c99e62ad9d8db184575317bbb3d0246ecb8a3af53471",
+    "source_url": "https://otda.ny.gov/resources/caseload/2018/2018-06-stats.pdf",
+    "status": "parsed"
+  },
+  "2018-07": {
+    "heap_line_count": 37,
+    "report_date": "2018-07-01",
+    "report_id": "2018-07",
+    "source_file": "2018-07-stats.pdf",
+    "source_sha256": "1934c07be7211bda8f766a3a4c267a0c8ae54c372f7360354cc3de3837a146ec",
+    "source_url": "https://otda.ny.gov/resources/caseload/2018/2018-07-stats.pdf",
+    "status": "parsed"
+  },
+  "2018-08": {
+    "heap_line_count": 37,
+    "report_date": "2018-08-01",
+    "report_id": "2018-08",
+    "source_file": "2018-08-stats.pdf",
+    "source_sha256": "540c686f7e75f4ab1f37600ea3c4e6b6c39441bbd86e482e85ed18b80d2abbf1",
+    "source_url": "https://otda.ny.gov/resources/caseload/2018/2018-08-stats.pdf",
+    "status": "parsed"
+  },
+  "2018-09": {
+    "heap_line_count": 37,
+    "report_date": "2018-09-01",
+    "report_id": "2018-09",
+    "source_file": "2018-09-stats.pdf",
+    "source_sha256": "e3d54226309363b8b5595da14b2c4a9049d21d1dc480e15c3455b0372f15ce7b",
+    "source_url": "https://otda.ny.gov/resources/caseload/2018/2018-09-stats.pdf",
+    "status": "parsed"
+  },
+  "2018-10": {
+    "heap_line_count": 37,
+    "report_date": "2018-10-01",
+    "report_id": "2018-10",
+    "source_file": "2018-10-stats.pdf",
+    "source_sha256": "a761d75ee9916e74e7aae2df63f059da2b9b4a4f1a99142b8413d72ec13fa699",
+    "source_url": "https://otda.ny.gov/resources/caseload/2018/2018-10-stats.pdf",
+    "status": "parsed"
+  },
+  "2018-11": {
+    "heap_line_count": 253,
+    "report_date": "2018-11-01",
+    "report_id": "2018-11",
+    "source_file": "2018-11-stats.pdf",
+    "source_sha256": "a497945bccfcfda97ba98fd94a7ce8a777538f916fe375fc8e76ec7ddd005890",
+    "source_url": "https://otda.ny.gov/resources/caseload/2018/2018-11-stats.pdf",
+    "status": "parsed"
+  },
+  "2018-12": {
+    "heap_line_count": 37,
+    "report_date": "2018-12-01",
+    "report_id": "2018-12",
+    "source_file": "2018-12-stats.pdf",
+    "source_sha256": "03c12d18e418ec7436cc4d064932659609d6c1971a5b0f9725d5ca8f7097c15e",
+    "source_url": "https://otda.ny.gov/resources/caseload/2018/2018-12-stats.pdf",
+    "status": "parsed"
+  },
+  "2019-01": {
+    "heap_line_count": 37,
+    "report_date": "2019-01-01",
+    "report_id": "2019-01",
+    "source_file": "2019-01-stats.pdf",
+    "source_sha256": "775627dae4e2beaf975cfa5d896761a928973198e37e8db32ddf4832b89b53a3",
+    "source_url": "https://otda.ny.gov/resources/caseload/2019/2019-01-stats.pdf",
+    "status": "parsed"
+  },
+  "2019-02": {
+    "heap_line_count": 37,
+    "report_date": "2019-02-01",
+    "report_id": "2019-02",
+    "source_file": "2019-02-stats.pdf",
+    "source_sha256": "63792b85bec48247c01f903e43f65e8289ee6b533ca1da1e1b2c8e44eac21400",
+    "source_url": "https://otda.ny.gov/resources/caseload/2019/2019-02-stats.pdf",
+    "status": "parsed"
+  },
+  "2019-03": {
+    "heap_line_count": 37,
+    "report_date": "2019-03-01",
+    "report_id": "2019-03",
+    "source_file": "2019-03-stats.pdf",
+    "source_sha256": "d0ece4d55c4940dad2325f535dac1a7e66bd03a6b1667420bed8139926717195",
+    "source_url": "https://otda.ny.gov/resources/caseload/2019/2019-03-stats.pdf",
+    "status": "parsed"
+  },
+  "2019-04": {
+    "heap_line_count": 37,
+    "report_date": "2019-04-01",
+    "report_id": "2019-04",
+    "source_file": "2019-04-stats.pdf",
+    "source_sha256": "5ad06919f45372bd9ed9c8d1fd278d074c4cbf89e986cc5dddcca3b0692158c1",
+    "source_url": "https://otda.ny.gov/resources/caseload/2019/2019-04-stats.pdf",
+    "status": "parsed"
+  },
+  "2019-05": {
+    "heap_line_count": 37,
+    "report_date": "2019-05-01",
+    "report_id": "2019-05",
+    "source_file": "2019-05-stats.pdf",
+    "source_sha256": "1dadca187886ba9916dba53fbcfd07be092a3f48270e88547ab38aad7a7a733d",
+    "source_url": "https://otda.ny.gov/resources/caseload/2019/2019-05-stats.pdf",
+    "status": "parsed"
+  },
+  "2019-06": {
+    "heap_line_count": 37,
+    "report_date": "2019-06-01",
+    "report_id": "2019-06",
+    "source_file": "2019-06-stats.pdf",
+    "source_sha256": "281425e697fd42dbd361c0e64ebae29be02aa670652a81e9d53652070b518105",
+    "source_url": "https://otda.ny.gov/resources/caseload/2019/2019-06-stats.pdf",
+    "status": "parsed"
+  },
+  "2019-07": {
+    "heap_line_count": 37,
+    "report_date": "2019-07-01",
+    "report_id": "2019-07",
+    "source_file": "2019-07-stats.pdf",
+    "source_sha256": "bcc6a2b750eaacbbda54bee7564773590d6e602ac7f7df032def92b0b0bbadb2",
+    "source_url": "https://otda.ny.gov/resources/caseload/2019/2019-07-stats.pdf",
+    "status": "parsed"
+  },
+  "2019-08": {
+    "heap_line_count": 37,
+    "report_date": "2019-08-01",
+    "report_id": "2019-08",
+    "source_file": "2019-08-stats.pdf",
+    "source_sha256": "fdc87db30c9af8c7211a85296ecc487d6ae8e4afb8320f1a63a84bae73863bca",
+    "source_url": "https://otda.ny.gov/resources/caseload/2019/2019-08-stats.pdf",
+    "status": "parsed"
+  },
+  "2019-09": {
+    "heap_line_count": 37,
+    "report_date": "2019-09-01",
+    "report_id": "2019-09",
+    "source_file": "2019-09-stats.pdf",
+    "source_sha256": "915aa03c56eeb22cb0ff22c8d5472c0390effe1b27398795d1024a37221d7200",
+    "source_url": "https://otda.ny.gov/resources/caseload/2019/2019-09-stats.pdf",
+    "status": "parsed"
+  },
+  "2019-10": {
+    "heap_line_count": 253,
+    "report_date": "2019-10-01",
+    "report_id": "2019-10",
+    "source_file": "2019-10-stats.pdf",
+    "source_sha256": "0b7bd9b610008582e64a60643dbad9cded785178ac72a5433e01d702251b2643",
+    "source_url": "https://otda.ny.gov/resources/caseload/2019/2019-10-stats.pdf",
+    "status": "parsed"
+  },
+  "2019-11": {
+    "heap_line_count": 253,
+    "report_date": "2019-11-01",
+    "report_id": "2019-11",
+    "source_file": "2019-11-stats.pdf",
+    "source_sha256": "a9a3a2e06f84d3ead3ce1a34484ecce54e6e29820b073fd90c202923346524d3",
+    "source_url": "https://otda.ny.gov/resources/caseload/2019/2019-11-stats.pdf",
+    "status": "parsed"
+  },
+  "2019-12": {
+    "heap_line_count": 253,
+    "report_date": "2019-12-01",
+    "report_id": "2019-12",
+    "source_file": "2019-12-stats.pdf",
+    "source_sha256": "d562e37c89ef739f202f223616d06afab30fadd26f627528b196428d59ce2644",
+    "source_url": "https://otda.ny.gov/resources/caseload/2019/2019-12-stats.pdf",
+    "status": "parsed"
+  },
+  "2020-01": {
+    "heap_line_count": 253,
+    "report_date": "2020-01-01",
+    "report_id": "2020-01",
+    "source_file": "2020-01-stats.pdf",
+    "source_sha256": "6336bf4148ea5e9f1ac9c6a3fe563c5763e8deb3e46e73eb35c0bf5e940775eb",
+    "source_url": "https://otda.ny.gov/resources/caseload/2020/2020-01-stats.pdf",
+    "status": "parsed"
+  },
+  "2020-02": {
+    "heap_line_count": 254,
+    "report_date": "2020-02-01",
+    "report_id": "2020-02",
+    "source_file": "2020-02-stats.pdf",
+    "source_sha256": "f61602f9587200dc0d51c791d8168585c328d53305cbcffb22056d9504d7df22",
+    "source_url": "https://otda.ny.gov/resources/caseload/2020/2020-02-stats.pdf",
+    "status": "parsed"
+  },
+  "2020-03": {
+    "heap_line_count": 254,
+    "report_date": "2020-03-01",
+    "report_id": "2020-03",
+    "source_file": "2020-03-stats.pdf",
+    "source_sha256": "2792e77d73c6c98414bd5e403dbb87ecbb23628a53d82ad11aa48cb5daed2311",
+    "source_url": "https://otda.ny.gov/resources/caseload/2020/2020-03-stats.pdf",
+    "status": "parsed"
+  },
+  "2020-04": {
+    "heap_line_count": 254,
+    "report_date": "2020-04-01",
+    "report_id": "2020-04",
+    "source_file": "2020-04-stats.pdf",
+    "source_sha256": "ec5d5dc734494b1965777811fce970a449636c63736d07f30b1fd06087cfccad",
+    "source_url": "https://otda.ny.gov/resources/caseload/2020/2020-04-stats.pdf",
+    "status": "parsed"
+  },
+  "2020-05": {
+    "heap_line_count": 266,
+    "report_date": "2020-05-01",
+    "report_id": "2020-05",
+    "source_file": "2020-05-stats.pdf",
+    "source_sha256": "c0724153fa1a26c2f8dc4e8957ea1f5d0597c202df7bee7bdf2b88d702db8c20",
+    "source_url": "https://otda.ny.gov/resources/caseload/2020/2020-05-stats.pdf",
+    "status": "parsed"
+  },
+  "2020-06": {
+    "heap_line_count": 266,
+    "report_date": "2020-06-01",
+    "report_id": "2020-06",
+    "source_file": "2020-06-stats.pdf",
+    "source_sha256": "661513536e64736b7295ce2e152a27965b18ec9da2fd1ae7a8f8003346bc0c49",
+    "source_url": "https://otda.ny.gov/resources/caseload/2020/2020-06-stats.pdf",
+    "status": "parsed"
+  },
+  "2020-07": {
+    "heap_line_count": 266,
+    "report_date": "2020-07-01",
+    "report_id": "2020-07",
+    "source_file": "2020-07-stats.pdf",
+    "source_sha256": "d8241b13151ee8f9e5e50c88202e52013ddcb670e4241f85c25b8c3651d0bbc1",
+    "source_url": "https://otda.ny.gov/resources/caseload/2020/2020-07-stats.pdf",
+    "status": "parsed"
+  },
+  "2020-08": {
+    "heap_line_count": 266,
+    "report_date": "2020-08-01",
+    "report_id": "2020-08",
+    "source_file": "2020-08-stats.pdf",
+    "source_sha256": "37fee0cc17543a03ee48b17a797782b12e2da8f6dba1762003a075977705f06c",
+    "source_url": "https://otda.ny.gov/resources/caseload/2020/2020-08-stats.pdf",
+    "status": "parsed"
+  },
+  "2020-09": {
+    "heap_line_count": 266,
+    "report_date": "2020-09-01",
+    "report_id": "2020-09",
+    "source_file": "2020-09-stats.pdf",
+    "source_sha256": "db6a52f762d1a1a87dc2d0de56e9346f76ff9da85c61d26c83915effbd4e1b59",
+    "source_url": "https://otda.ny.gov/resources/caseload/2020/2020-09-stats.pdf",
+    "status": "parsed"
+  },
+  "2020-10": {
+    "heap_line_count": 254,
+    "report_date": "2020-10-01",
+    "report_id": "2020-10",
+    "source_file": "2020-10-stats.pdf",
+    "source_sha256": "67b96aaffb2ce40b81feda91f3be485dc7b07cdcc4410576347974b7b08dda75",
+    "source_url": "https://otda.ny.gov/resources/caseload/2020/2020-10-stats.pdf",
+    "status": "parsed"
+  },
+  "2020-11": {
+    "heap_line_count": 254,
+    "report_date": "2020-11-01",
+    "report_id": "2020-11",
+    "source_file": "2020-11-stats.pdf",
+    "source_sha256": "a37d14ba7b5307689eae5272ea24b0734dd9faa637eae795185a951d228feab3",
+    "source_url": "https://otda.ny.gov/resources/caseload/2020/2020-11-stats.pdf",
+    "status": "parsed"
+  },
+  "2020-12": {
+    "heap_line_count": 254,
+    "report_date": "2020-12-01",
+    "report_id": "2020-12",
+    "source_file": "2020-12-stats.pdf",
+    "source_sha256": "cbe3b040ac9e2405c921193a495d220085704d89badf96537ae89e5ace85c801",
+    "source_url": "https://otda.ny.gov/resources/caseload/2020/2020-12-stats.pdf",
+    "status": "parsed"
+  },
+  "2021-01": {
+    "heap_line_count": 37,
+    "report_date": "2021-01-01",
+    "report_id": "2021-01",
+    "source_file": "2021-01-stats.pdf",
+    "source_sha256": "41c3d294008f2ca458d83126c36fb5862af9178acefa2a92e52862ba973a75f6",
+    "source_url": "https://otda.ny.gov/resources/caseload/2021/2021-01-stats.pdf",
+    "status": "parsed"
+  },
+  "2021-02": {
+    "heap_line_count": 254,
+    "report_date": "2021-02-01",
+    "report_id": "2021-02",
+    "source_file": "2021-02-stats.pdf",
+    "source_sha256": "775b2f0051bd4c70d2a96b4d8a0d3566a2989460b9376ae48bb70d7756859e95",
+    "source_url": "https://otda.ny.gov/resources/caseload/2021/2021-02-stats.pdf",
+    "status": "parsed"
+  },
+  "2021-03": {
+    "heap_line_count": 254,
+    "report_date": "2021-03-01",
+    "report_id": "2021-03",
+    "source_file": "2021-03-stats.pdf",
+    "source_sha256": "e7053ee7474a21017f16545f6b0c102051bd570cdaee32c7b562ebec6907d417",
+    "source_url": "https://otda.ny.gov/resources/caseload/2021/2021-03-stats.pdf",
+    "status": "parsed"
+  },
+  "2021-04": {
+    "last_checked": "2026-09-16",
+    "reason": "no_valid_pdf_downloaded; browser_title='(no title)'; browser_url='https://otda.ny.gov/resources/caseload/2021/2021-04-stats.pdf'",
+    "report_date": "2021-04-01",
+    "report_id": "2021-04",
+    "source_file": "2021-04-stats.pdf",
+    "source_url": "https://otda.ny.gov/resources/caseload/2021/2021-04-stats.pdf",
     "status": "browser_download_failed"
   }
 }

@@ -1,8 +1,8 @@
 [
   {
     "checked_on": "2026-09-16",
-    "reason": "browser_navigation_error: Message: invalid session id; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalidsessionidexception\nStacktrace:\n0   chromedriver                        0x00000001009b336a chromedriver + 4150122\n1   chromedriver                        0x000000010062b590 chromedriver + 447888\n2   chromedriver                        0x0000000100673be4 chromedriver + 744420\n3   chromedriver                        0x00000001006a70f6 chromedriver + 954614\n4   chromedriver                        0x00000001006a1ed6 chromedriver + 933590\n5   chromedriver                        0x00000001006a1617 chromedriver + 931351\n6   chromedriver                        0x00000001005f725b chromedriver + 234075\n7   chromedriver                        0x00000001005f77c4 chromedriver + 235460\n8   chromedriver                        0x00000001005f7cdf chromedriver + 236767\n9   chromedriver                        0x000000010097cb77 chromedriver + 3926903\n10  chromedriver                        0x00000001009808a4 chromedriver + 3942564\n11  chromedriver                        0x00000001009616ae chromedriver + 3815086\n12  chromedriver                        0x0000000100981372 chromedriver + 3945330\n13  chromedriver                        0x0000000100954279 chromedriver + 3760761\n14  chromedriver                        0x00000001005f5ac7 chromedriver + 228039\n15  dyld                                0x00007ff8169ab1c8 start + 3240\n",
-    "report_id": "2007-01",
-    "source_url": "https://otda.ny.gov/resources/caseload/2007/2007-01-stats.pdf"
+    "reason": "no_valid_pdf_downloaded; browser_title='(no title)'; browser_url='https://otda.ny.gov/resources/caseload/2021/2021-04-stats.pdf'",
+    "report_id": "2021-04",
+    "source_url": "https://otda.ny.gov/resources/caseload/2021/2021-04-stats.pdf"
   }
 ]
