@@ -28,13 +28,13 @@ TARGET_REPORTS = (
 # Do not add hundreds of targets at once.
 
 # Maximum missing PDF downloads in a single manual workflow run.
-MAX_NEW_PDFS_PER_RUN = 1
+MAX_NEW_PDFS_PER_RUN = 20
 
 # Maximum time to wait for Chrome to finish downloading one PDF.
 DOWNLOAD_TIMEOUT_SECONDS = 120
 
 # Delay before a later download if MAX_NEW_PDFS_PER_RUN is increased.
-SECONDS_BETWEEN_DOWNLOADS = 12
+SECONDS_BETWEEN_DOWNLOADS = 7
 
 # Chrome must have been started manually with this remote-debugging port:
 #
