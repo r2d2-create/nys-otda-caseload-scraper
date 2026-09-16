@@ -62,17 +62,15 @@ FILENAME_PATTERN = re.compile(
     flags=re.IGNORECASE,
 )
 
-# Identifies PDF pages containing HEAP tables/terms.
-HEAP_PAGE_PATTERN = re.compile(
-    r"HOME\s+ENERGY\s+ASSISTANCE\s+PROGRAM|\bHEAP\b",
-    flags=re.IGNORECASE,
-)
+# The only report tables to retain. Do not rely on a generic HEAP mention:
+# other program pages can mention HEAP in footnotes or narrative text.
+TARGET_HEAP_TABLES = {25, 26, 27}
 
+# Matches official report headings such as "Table 25" or "TABLE 27:".
 TABLE_NUMBER_PATTERN = re.compile(
-    r"\bTable\s+(\d+)\b",
+    r"\bTable\s+(\d{1,3})\b",
     flags=re.IGNORECASE,
 )
-
 
 # ============================================================
 # JSON HELPERS
