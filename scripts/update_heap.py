@@ -464,84 +464,84 @@ def main() -> int:
         # ----------------------------------------------------
         # 1. DOWNLOAD MISSING DIRECT PDFs VIA EXISTING CHROME
         # ----------------------------------------------------
-            missing_targets = [
-                (year, month)
-                for year, month in TARGET_REPORTS
-                if not is_valid_pdf(expected_pdf_path(year, month))
-            ]
+        missing_targets = [
+            (year, month)
+            for year, month in TARGET_REPORTS
+            if not is_valid_pdf(expected_pdf_path(year, month))
+        ]
 
-            if missing_targets:
-                try:
-                    driver = attach_to_existing_chrome()
-                except Exception as exc:
-                    raise RuntimeError(
-                        "Could not connect to Chrome on 127.0.0.1:9222. "
-                        "Close all Chrome windows and start the dedicated "
-                        "remote-debug Chrome session before running the workflow. "
-                        f"Original error: {exc}"
-                    ) from exc
+        if missing_targets:
+            try:
+                driver = attach_to_existing_chrome()
+            except Exception as exc:
+                raise RuntimeError(
+                    "Could not connect to Chrome on 127.0.0.1:9222. "
+                    "Close all Chrome windows and start the dedicated "
+                    "remote-debug Chrome session before running the workflow. "
+                    f"Original error: {exc}"
+                ) from exc
 
-                for year, month in missing_targets:
-                    if (
-                        MAX_NEW_PDFS_PER_RUN is not None
-                        and downloaded_this_run >= MAX_NEW_PDFS_PER_RUN
-                    ):
-                        break
+            for year, month in missing_targets:
+                if (
+                    MAX_NEW_PDFS_PER_RUN is not None
+                    and downloaded_this_run >= MAX_NEW_PDFS_PER_RUN
+                ):
+                    break
 
-                    key = report_id(year, month)
-                    url = direct_pdf_url(year, month)
+                key = report_id(year, month)
+                url = direct_pdf_url(year, month)
 
-                    print(f"Opening in attached Chrome: {key}: {url}")
+                print(f"Opening in attached Chrome: {key}: {url}")
 
-                    success, message = download_one_pdf_with_chrome(
-                        driver,
-                        year,
-                        month,
+                success, message = download_one_pdf_with_chrome(
+                    driver,
+                    year,
+                    month,
+                )
+
+                if success:
+                    print(f"  Download success: {message}")
+
+                    downloaded_this_run += 1
+                    changed = True
+
+                    failures = [
+                        row for row in failures
+                        if row.get("report_id") != key
+                    ]
+                else:
+                    print(f"  Download failed: {message}")
+
+                    manifest[key] = {
+                        "report_id": key,
+                        "report_date": f"{year}-{month:02d}-01",
+                        "source_url": url,
+                        "source_file": expected_pdf_path(year, month).name,
+                        "status": "browser_download_failed",
+                        "reason": message,
+                        "last_checked": date.today().isoformat(),
+                    }
+
+                    failures = [
+                        row for row in failures
+                        if row.get("report_id") != key
+                    ]
+
+                    failures.append(
+                        {
+                            "report_id": key,
+                            "source_url": url,
+                            "checked_on": date.today().isoformat(),
+                            "reason": message,
+                        }
                     )
 
-                    if success:
-                        print(f"  Download success: {message}")
+                    changed = True
 
-                        downloaded_this_run += 1
-                        changed = True
+                    # Stop after a first failure—never hammer the host.
+                    break
 
-                        failures = [
-                            row for row in failures
-                            if row.get("report_id") != key
-                        ]
-                    else:
-                        print(f"  Download failed: {message}")
-
-                        manifest[key] = {
-                            "report_id": key,
-                            "report_date": f"{year}-{month:02d}-01",
-                            "source_url": url,
-                            "source_file": expected_pdf_path(year, month).name,
-                            "status": "browser_download_failed",
-                            "reason": message,
-                            "last_checked": date.today().isoformat(),
-                        }
-
-                        failures = [
-                            row for row in failures
-                            if row.get("report_id") != key
-                        ]
-
-                        failures.append(
-                            {
-                                "report_id": key,
-                                "source_url": url,
-                                "checked_on": date.today().isoformat(),
-                                "reason": message,
-                            }
-                        )
-
-                        changed = True
-
-                        # Stop after a first failure—never hammer the host.
-                        break
-
-                    sleep(SECONDS_BETWEEN_DOWNLOADS)
+                sleep(SECONDS_BETWEEN_DOWNLOADS)
 
         # ----------------------------------------------------
         # 2. PARSE EVERY LOCAL PDF, OLD AND NEW
