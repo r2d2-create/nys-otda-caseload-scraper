@@ -313,31 +313,21 @@ def clean_lines(page_text: str) -> List[str]:
     return output
 
 
-def classify_heap_page(page_text: str) -> str:
-    """Classify a HEAP page without assuming a fixed historic layout."""
-    normalized = re.sub(r"\s+", " ", page_text).upper()
-
-    if "NON-EMERGENCY" in normalized or "NON EMERGENCY" in normalized:
-        return "non_emergency"
-
-    if "EMERGENCY" in normalized:
-        return "emergency"
-
-    if "ADMINISTRATIVE ALLOCATIONS" in normalized:
-        return "total_with_administrative_allocations"
-
-    if "HOME ENERGY ASSISTANCE PROGRAM" in normalized:
-        return "total_or_general_heap"
-
-    return "heap_related"
+def heap_table_type(table_number: int) -> str:
+    """Give the three retained HEAP tables stable labels."""
+    return {
+        25: "heap_table_25",
+        26: "heap_table_26",
+        27: "heap_table_27",
+    }[table_number]
 
 
 def extract_heap_lines(pdf_path: Path) -> List[Dict[str, Any]]:
     """
-    Extract all text lines from pages mentioning HEAP.
+    Extract line-level text from official report Tables 25, 26, and 27 only.
 
-    Line-level output preserves evidence from historical PDFs whose
-    table layouts can vary across years.
+    A selected table can continue onto following pages. Text is retained until
+    the next numbered table heading begins.
     """
     filename_match = FILENAME_PATTERN.search(pdf_path.name)
 
@@ -353,37 +343,77 @@ def extract_heap_lines(pdf_path: Path) -> List[Dict[str, Any]]:
 
     reader = PdfReader(str(pdf_path))
     output_rows: List[Dict[str, Any]] = []
+    found_tables = set()
+    active_table: Optional[int] = None
 
     for page_number, page in enumerate(reader.pages, start=1):
         page_text = page.extract_text() or ""
+        table_matches = list(TABLE_NUMBER_PATTERN.finditer(page_text))
 
-        if not HEAP_PAGE_PATTERN.search(page_text):
-            continue
+        if not table_matches:
+            if active_table not in TARGET_HEAP_TABLES:
+                continue
 
-        table_match = TABLE_NUMBER_PATTERN.search(page_text)
-        table_number = table_match.group(1) if table_match else None
-        table_type = classify_heap_page(page_text)
+            sections = [(0, len(page_text), active_table)]
+        else:
+            sections = []
 
-        for line_number, raw_text in enumerate(
-            clean_lines(page_text),
-            start=1,
-        ):
-            output_rows.append(
-                {
-                    "report_id": key,
-                    "report_date": f"{year}-{month:02d}-01",
-                    "report_year": year,
-                    "report_month": month,
-                    "source_file": pdf_path.name,
-                    "source_url": direct_pdf_url(year, month),
-                    "source_sha256": source_hash,
-                    "page_number": page_number,
-                    "table_number_detected": table_number,
-                    "heap_table_type": table_type,
-                    "line_number": line_number,
-                    "raw_text": raw_text,
-                }
-            )
+            for index, match in enumerate(table_matches):
+                table_number = int(match.group(1))
+                section_start = match.start()
+                section_end = (
+                    table_matches[index + 1].start()
+                    if index + 1 < len(table_matches)
+                    else len(page_text)
+                )
+
+                sections.append(
+                    (section_start, section_end, table_number)
+                )
+
+            active_table = int(table_matches[-1].group(1))
+
+        for section_start, section_end, table_number in sections:
+            if table_number not in TARGET_HEAP_TABLES:
+                continue
+
+            section_text = page_text[section_start:section_end]
+            lines = clean_lines(section_text)
+
+            if not lines:
+                continue
+
+            found_tables.add(table_number)
+
+            for line_number, raw_text in enumerate(lines, start=1):
+                output_rows.append(
+                    {
+                        "report_id": key,
+                        "report_date": f"{year}-{month:02d}-01",
+                        "report_year": year,
+                        "report_month": month,
+                        "source_file": pdf_path.name,
+                        "source_url": direct_pdf_url(year, month),
+                        "source_sha256": source_hash,
+                        "page_number": page_number,
+                        "table_number_detected": str(table_number),
+                        "heap_table_type": heap_table_type(table_number),
+                        "line_number": line_number,
+                        "raw_text": raw_text,
+                    }
+                )
+
+    missing_tables = TARGET_HEAP_TABLES - found_tables
+
+    if missing_tables:
+        missing_text = ", ".join(
+            f"Table {number}"
+            for number in sorted(missing_tables)
+        )
+        raise ValueError(
+            f"Could not find nonblank text for expected HEAP table(s): "
+            f"{missing_text}."
+        )
 
     return output_rows
 
