@@ -117,21 +117,44 @@ def write_json(path: Path, value: Any) -> None:
 # URL / FILE HELPERS
 # ============================================================
 
-def report_id(year: int, month: int) -> str:
-    """Return an ID such as 2025-09."""
-    return f"{year}-{month:02d}"
-
-
 def direct_pdf_url(year: int, month: int) -> str:
     """
-    Generate a direct OTDA PDF URL.
+    Return the direct OTDA caseload-PDF URL for a reporting month.
 
-    No OTDA archive/index page is ever requested.
+    OTDA changed its remote filename convention several times. The local
+    filename remains standardized elsewhere as YYYY-MM-stats.pdf.
     """
-    return (
-        f"{OTDA_BASE_URL}/{year}/"
-        f"{year}-{month:02d}-stats.pdf"
+    month_names = (
+        "JAN",
+        "FEB",
+        "MAR",
+        "APR",
+        "MAY",
+        "JUN",
+        "JUL",
+        "AUG",
+        "SEPT",
+        "OCT",
+        "NOV",
+        "DEC",
     )
+
+    if 2001 <= year <= 2004:
+        filename = f"stats{month:02d}{year % 100:02d}.pdf"
+
+    elif year == 2005:
+        filename = f"STATS{month:02d}{year % 100:02d}.pdf"
+
+    elif year == 2006 and 1 <= month <= 8:
+        filename = f"STATS_{month_names[month - 1]}{year}.pdf"
+
+    elif year == 2006 and month == 9:
+        filename = "STATS_SEPT_2006.pdf"
+
+    else:
+        filename = f"{year}-{month:02d}-stats.pdf"
+
+    return f"{OTDA_BASE_URL}/{year}/{filename}"
 
 
 def expected_pdf_path(year: int, month: int) -> Path:
